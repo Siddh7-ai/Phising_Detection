@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PhishGuard AI • Website Security Scanner</title>
+
+    <!-- Cybersecurity-style fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- Background grid / glow -->
+    <div class="bg-grid"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">
+                <span class="neon-green">Phish</span><span class="neon-red">Guard</span> AI
+            </h1>
+            <p class="subtitle">
+                Advanced Phishing Website Detection System
+            </p>
+        </header>
+
+        <!-- Scan Card -->
+        <section class="scan-card">
+            <h2>Scan a Website URL</h2>
+
+            <!-- URL Input -->
+            <input
+                type="text"
+                id="urlInput"
+                placeholder="https://example.com/login"
+                autocomplete="off"
+            />
+
+            <!-- Scan Button -->
+            <button id="scanBtn">
+                🔍 Scan Website
+            </button>
+
+            <!-- Loading Animation -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <span>Analyzing URL for phishing threats...</span>
+            </div>
+        </section>
+
+        <!-- Result Card -->
+        <section id="resultCard" class="result-card hidden">
+            <h2>Scan Result</h2>
+
+            <!-- Status -->
+            <div id="status" class="status safe">
+                SAFE
+            </div>
+
+            <!-- Confidence -->
+            <p class="confidence">
+                Confidence Score:
+                <span id="confidenceValue">0%</span>
+            </p>
+
+            <!-- Risk Level -->
+            <p class="risk-level">
+                Risk Level:
+                <span id="riskLevel">Low</span>
+            </p>
+
+            <!-- Explanation -->
+            <div class="explanation">
+                <h3>Why this result?</h3>
+                <ul id="riskFactors">
+                    <!-- Filled dynamically by JS -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                © 2026 PhishGuard AI • National Hackathon Edition
+            </p>
+            <p class="footer-sub">
+                Security-first • Explainable AI • Built with Flask & Machine Learning
+            </p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
