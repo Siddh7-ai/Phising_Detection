@@ -1,32 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Phishing Scanner</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>🔐 Phishing Scanner</h2>
+  <h2>🛡️ PhishGuard AI</h2>
 
-  <div class="section">
-    <label>Current Website</label>
-    <div id="currentUrl" class="url">—</div>
-  </div>
+  <p id="url">Loading current site…</p>
+  <p id="status">Analyzing…</p>
 
-  <button id="scanBtn">Scan Current Website</button>
-
-  <div id="loading" class="loading hidden">Scanning...</div>
-
-  <div id="result" class="result hidden">
-    <p><strong>Label:</strong> <span id="label"></span></p>
-    <p><strong>Confidence:</strong> <span id="confidence"></span>%</p>
-    <p><strong>Risk Level:</strong> <span id="risk"></span></p>
-
-    <div id="explanationsSection" class="hidden">
-      <strong>Risk Factors:</strong>
-      <ul id="explanations"></ul>
-    </div>
-  </div>
+  <details>
+    <summary>Why is this risky?</summary>
+    <p id="reason">Waiting for analysis…</p>
+  </details>
 
   <script src="popup.js"></script>
 </body>

@@ -26,3 +26,10 @@ timestamp,url,label,confidence,risk_level
 2026-02-07T06:45:13.385961,https://www.google.com/,LEGITIMATE,0.66,Low
 2026-02-07T06:47:26.438033,https://secure-update-paypal.com/login,PHISHING,99.92,High
 2026-02-07T07:42:52.162114,https://www.apple.com/in,LEGITIMATE,1.1,Low
+2026-02-07T08:08:05.751314,https://www.apple.com/in,LEGITIMATE,1.1,Low
+2026-02-07T08:08:25.351668,https://www.google.com,LEGITIMATE,0.4,Low
+2026-02-07T08:08:33.018734,https://www.googel.com,LEGITIMATE,0.4,Low
+2026-02-07T08:08:43.663932,https://www.goog,LEGITIMATE,0.06,Low
+2026-02-07T08:08:51.341844,https://www.google.com,LEGITIMATE,0.4,Low
+2026-02-07T09:13:58.590000,https://secure-icici-login.com,PHISHING,90.2,High
+2026-02-07T09:14:26.512040,https://www.google.com,LEGITIMATE,0.4,Low

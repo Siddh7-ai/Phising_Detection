@@ -1,12 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Phishing Website Scanner",
+  "name": "PhishGuard AI",
   "version": "1.0",
-  "description": "Scan the current website for phishing risks using an AI-powered backend.",
-  "permissions": ["tabs"],
-  "host_permissions": ["http://localhost:5000/*"],
+  "description": "AI-powered phishing website detection",
+  "permissions": ["tabs", "activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
   "action": {
-    "default_popup": "popup.html",
-    "default_title": "Phishing Scanner"
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
   }
 }
