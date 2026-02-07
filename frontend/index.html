@@ -1,100 +1,623 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="cyber">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>PhishGuard AI • Website Security Scanner</title>
+    <title>PhishGuard AI • Advanced Website Security Scanner</title>
 
-    <!-- Cybersecurity-style fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <!-- Background grid / glow -->
+    <!-- Background Effects -->
     <div class="bg-grid"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast hidden"></div>
 
     <!-- Main Container -->
     <div class="container">
 
-        <!-- Header -->
+        <!-- Header with Stats -->
         <header class="header">
-            <h1 class="title">
-                <span class="neon-green">Phish</span><span class="neon-red">Guard</span> AI
-            </h1>
-            <p class="subtitle">
-                Advanced Phishing Website Detection System
-            </p>
+            <div class="header-content">
+                <h1 class="title">
+                    <i class="fas fa-shield-alt"></i>
+                    <span class="neon-green">Phish</span><span class="neon-red">Guard</span> AI
+                </h1>
+                <p class="subtitle">
+                    Advanced ML-Powered Phishing Detection System
+                </p>
+            </div>
+
+            <!-- Quick Stats Dashboard -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-search"></i>
+                    <div class="stat-value" id="totalScans">0</div>
+                    <div class="stat-label">Total Scans</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shield-virus"></i>
+                    <div class="stat-value" id="threatsBlocked">0</div>
+                    <div class="stat-label">Threats Blocked</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-brain"></i>
+                    <div class="stat-value" id="accuracy">95.2%</div>
+                    <div class="stat-label">ML Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-bolt"></i>
+                    <div class="stat-value" id="avgScanTime">1.2s</div>
+                    <div class="stat-label">Avg Scan Time</div>
+                </div>
+            </div>
+
+            <!-- Theme & Settings + User Menu -->
+            <div class="header-actions">
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu" style="display: flex; align-items: center; gap: 12px; margin-right: 20px;">
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(0, 255, 65, 0.1); border: 1px solid rgba(0, 255, 65, 0.3); border-radius: 8px;">
+                        <i class="fas fa-user-circle" style="color: #00ff41; font-size: 18px;"></i>
+                        <span id="username" style="color: #00ff41; font-weight: 600; font-family: 'Orbitron', sans-serif;">Guest</span>
+                    </div>
+                    <button onclick="handleLogout()" class="icon-btn" id="logoutBtn" title="Logout" style="background: rgba(255, 0, 110, 0.2); border: 1px solid rgba(255, 0, 110, 0.4);">
+                        <i class="fas fa-sign-out-alt" style="color: #ff006e;"></i>
+                    </button>
+                </div>
+
+                <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="icon-btn" id="historyToggle" title="View History">
+                    <i class="fas fa-history"></i>
+                </button>
+                <button class="icon-btn" id="settingsBtn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
         </header>
 
         <!-- Scan Card -->
         <section class="scan-card">
-            <h2>Scan a Website URL</h2>
+            <h2><i class="fas fa-link"></i> Scan a Website URL</h2>
 
-            <!-- URL Input -->
-            <input
-                type="text"
-                id="urlInput"
-                placeholder="https://example.com/login"
-                autocomplete="off"
-            />
+            <!-- URL Input with Preview -->
+            <div class="input-wrapper">
+                <input
+                    type="text"
+                    id="urlInput"
+                    placeholder="https://example.com/login"
+                    autocomplete="off"
+                />
+                <div class="url-preview" id="urlPreview"></div>
+            </div>
+
+            <!-- Quick Test URLs -->
+            <div class="quick-tests">
+                <span class="quick-label">Quick Test:</span>
+                <button class="quick-btn" data-url="https://google.com">
+                    <i class="fas fa-check-circle"></i> Safe
+                </button>
+                <button class="quick-btn" data-url="http://paypal-verify.tk">
+                    <i class="fas fa-exclamation-triangle"></i> Phishing
+                </button>
+                <button class="quick-btn" data-url="https://github.com">
+                    <i class="fas fa-code"></i> Trusted
+                </button>
+            </div>
 
             <!-- Scan Button -->
-            <button id="scanBtn">
-                🔍 Scan Website
+            <button id="scanBtn" class="scan-btn">
+                <i class="fas fa-search"></i>
+                <span>Scan Website</span>
             </button>
 
             <!-- Loading Animation -->
             <div id="loading" class="loading hidden">
-                <div class="spinner"></div>
-                <span>Analyzing URL for phishing threats...</span>
+                <div class="spinner-advanced">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                </div>
+                <div class="loading-text">
+                    <div class="loading-stage" id="loadingStage">Analyzing URL...</div>
+                    <div class="loading-time" id="loadingTime">0.0s</div>
+                </div>
+                <div class="loading-progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
             </div>
         </section>
 
         <!-- Result Card -->
         <section id="resultCard" class="result-card hidden">
-            <h2>Scan Result</h2>
-
-            <!-- Status -->
-            <div id="status" class="status safe">
-                SAFE
+            <div class="result-header">
+                <h2><i class="fas fa-clipboard-check"></i> Scan Result</h2>
+                <div class="result-actions">
+                    <button class="action-btn" id="copyBtn" title="Copy Result">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="action-btn" id="shareBtn" title="Share">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                    <button class="action-btn" id="exportBtn" title="Export Report">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Confidence -->
-            <p class="confidence">
-                Confidence Score:
-                <span id="confidenceValue">0%</span>
-            </p>
+            <!-- URL Being Scanned -->
+            <div class="scanned-url">
+                <i class="fas fa-link"></i>
+                <span id="scannedUrl">https://example.com</span>
+            </div>
 
-            <!-- Risk Level -->
-            <p class="risk-level">
-                Risk Level:
-                <span id="riskLevel">Low</span>
-            </p>
+            <!-- Main Status -->
+            <div class="status-section">
+                <div id="status" class="status safe">
+                    <i class="fas fa-check-circle"></i>
+                    SAFE
+                </div>
+                
+                <!-- Confidence Meter (Circular) -->
+                <div class="confidence-meter">
+                    <svg class="circular-progress" width="160" height="160">
+                        <circle class="bg-circle" cx="80" cy="80" r="70"></circle>
+                        <circle class="progress-circle" id="progressCircle" cx="80" cy="80" r="70"></circle>
+                    </svg>
+                    <div class="confidence-value">
+                        <span id="confidenceValue">0</span>%
+                        <div class="confidence-label">Confidence</div>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Explanation -->
-            <div class="explanation">
-                <h3>Why this result?</h3>
-                <ul id="riskFactors">
-                    <!-- Filled dynamically by JS -->
-                </ul>
+            <!-- Metrics Grid -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="metric-label">Domain Age</div>
+                    <div class="metric-value" id="domainAge">Unknown</div>
+                </div>
+                <div class="metric-card">
+                    <i class="fas fa-lock"></i>
+                    <div class="metric-label">HTTPS</div>
+                    <div class="metric-value" id="httpsStatus">N/A</div>
+                </div>
+                <div class="metric-card">
+                    <i class="fas fa-globe"></i>
+                    <div class="metric-label">Risk Level</div>
+                    <div class="metric-value" id="riskLevel">Low</div>
+                </div>
+                <div class="metric-card">
+                    <i class="fas fa-chart-line"></i>
+                    <div class="metric-label">URL Length</div>
+                    <div class="metric-value" id="urlLength">0</div>
+                </div>
+            </div>
+
+            <!-- Risk Factors -->
+            <div class="risk-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> Risk Analysis</h3>
+                <div id="riskFactors" class="risk-factors">
+                    <!-- Dynamically filled -->
+                </div>
+            </div>
+
+            <!-- ML Model Info -->
+            <div class="model-info">
+                <div class="model-badge">
+                    <i class="fas fa-robot"></i>
+                    <span>Analyzed by: <strong id="modelName">Random Forest</strong></span>
+                </div>
+                <div class="scan-time">
+                    <i class="fas fa-clock"></i>
+                    <span>Scan completed in <strong id="scanDuration">1.2s</strong></span>
+                </div>
+            </div>
+
+            <!-- Detailed Breakdown (Collapsible) -->
+            <div class="details-section">
+                <button class="details-toggle" id="detailsToggle">
+                    <i class="fas fa-chevron-down"></i>
+                    View Detailed Analysis
+                </button>
+                <div class="details-content hidden" id="detailsContent">
+                    <canvas id="featuresChart" width="400" height="200"></canvas>
+                </div>
             </div>
         </section>
 
+        <!-- Scan History Sidebar -->
+        <aside id="historySidebar" class="history-sidebar hidden">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-history"></i> Recent Scans</h3>
+                <button class="close-btn" id="closeHistory">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="history-list" id="historyList">
+                <!-- Dynamically filled -->
+            </div>
+            <button class="clear-history-btn" id="clearHistory">
+                <i class="fas fa-trash"></i> Clear History
+            </button>
+        </aside>
+
         <!-- Footer -->
         <footer class="footer">
-            <p>
-                © 2026 PhishGuard AI • National Hackathon Edition
-            </p>
-            <p class="footer-sub">
-                Security-first • Explainable AI • Built with Flask & Machine Learning
-            </p>
+            <div class="footer-content">
+                <p>
+                    <i class="fas fa-shield-alt"></i>
+                    © 2026 PhishGuard AI • National Hackathon Edition
+                </p>
+                <p class="footer-sub">
+                    Security-first • Explainable AI • Built with Flask & Machine Learning
+                </p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/Siddh7-ai/Phising_Detection.git"><i class="fab fa-github"></i> GitHub</a>
+                <a href="mailto:siddharthraulji5@gmail.com"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
         </footer>
     </div>
 
-    <!-- JavaScript -->
+    <!-- ========================================================================== -->
+    <!-- AUTH MODAL - Login/Signup Modal -->
+    <!-- ========================================================================== -->
+    <div id="authModal" class="auth-modal hidden">
+        <div class="auth-modal-overlay" onclick="closeAuthModal()"></div>
+        
+        <div class="auth-modal-content">
+            <!-- Close Button -->
+            <button class="auth-modal-close" onclick="closeAuthModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- Modal Header -->
+            <div class="auth-modal-header">
+                <i class="fas fa-shield-alt" style="font-size: 48px; color: var(--accent-primary); margin-bottom: 15px;"></i>
+                <h2 id="authModalTitle">Login Required</h2>
+                <p id="authModalSubtitle">Please login or create an account to continue</p>
+            </div>
+            
+            <!-- Tab Switcher -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="auth-tab" data-tab="signup" onclick="switchAuthTab('signup')">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="loginEmail">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="loginEmail" 
+                        placeholder="your@email.com" 
+                        required 
+                        autocomplete="email"
+                    />
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="password-input">
+                        <input 
+                            type="password" 
+                            id="loginPassword" 
+                            placeholder="••••••••" 
+                            required 
+                            autocomplete="current-password"
+                        />
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('loginPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-error" id="loginError"></div>
+                
+                <button type="submit" class="auth-submit-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" onclick="switchAuthTab('signup'); return false;">Sign Up</a></p>
+                </div>
+            </form>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <label for="signupUsername">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input 
+                        type="text" 
+                        id="signupUsername" 
+                        placeholder="Choose a username" 
+                        required 
+                        autocomplete="username"
+                        minlength="3"
+                        maxlength="20"
+                        pattern="[a-zA-Z0-9_]+"
+                    />
+                    <small>3-20 characters, letters, numbers, and underscore only</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="signupEmail" 
+                        placeholder="your@email.com" 
+                        required 
+                        autocomplete="email"
+                    />
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="password-input">
+                        <input 
+                            type="password" 
+                            id="signupPassword" 
+                            placeholder="••••••••" 
+                            required 
+                            autocomplete="new-password"
+                            minlength="8"
+                        />
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('signupPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <small>Minimum 8 characters</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPasswordConfirm">
+                        <i class="fas fa-lock"></i> Confirm Password
+                    </label>
+                    <div class="password-input">
+                        <input 
+                            type="password" 
+                            id="signupPasswordConfirm" 
+                            placeholder="••••••••" 
+                            required 
+                            autocomplete="new-password"
+                        />
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('signupPasswordConfirm')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-error" id="signupError"></div>
+                
+                <button type="submit" class="auth-submit-btn" id="signupBtn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Create Account</span>
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" onclick="switchAuthTab('login'); return false;">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================================================================== -->
+    <!-- SCRIPTS - CRITICAL: Load in this exact order -->
+    <!-- ========================================================================== -->
+    
+    <!-- 1. API Client (creates window.API) - MUST load first -->
+    <script src="js/api.js"></script>
+    
+    <!-- 2. Auth helpers (uses window.API) - MUST load second -->
+    <script src="js/auth.js"></script>
+    
+    <!-- 3. Auth Handler (NEW - handles modal) - MUST load third -->
+    <script src="js/auth-handler.js"></script>
+    
+    <!-- 4. Main application script (uses window.API) - MUST load fourth -->
     <script src="script.js"></script>
+
+    <!-- 5. Authentication Integration - Loads last -->
+    <script>
+        /**
+         * Initialize authentication when page loads
+         */
+        async function initializeApp() {
+            console.log('🚀 Initializing PhishGuard AI...');
+            
+            // Check if window.API is available
+            if (typeof window.API === 'undefined') {
+                console.error('❌ CRITICAL: window.API is not defined!');
+                console.error('Make sure js/api.js is loaded before this script');
+                return;
+            }
+            
+            console.log('✅ API client is ready');
+            
+            // Check if on a protected page (index.html)
+            const isProtectedPage = window.location.pathname.includes('index.html') || 
+                                   window.location.pathname === '/' ||
+                                   window.location.pathname === '';
+            
+            if (isProtectedPage) {
+                // Check authentication
+                const isAuth = window.API.isAuthenticated();
+                
+                if (!isAuth) {
+                    console.log('ℹ️ Not authenticated - using guest mode');
+                    document.getElementById('username').textContent = 'Guest';
+                    return;
+                }
+                
+                // Validate token
+                const isValid = await window.API.validateToken();
+                
+                if (!isValid) {
+                    console.log('❌ Invalid token - using guest mode');
+                    document.getElementById('username').textContent = 'Guest';
+                    localStorage.removeItem('token');
+                    return;
+                }
+                
+                // Load user profile
+                try {
+                    const profile = await window.API.getProfile();
+                    
+                    // Update username display
+                    const usernameEl = document.getElementById('username');
+                    if (usernameEl && profile.user) {
+                        usernameEl.textContent = profile.user.username;
+                        console.log('✅ Logged in as:', profile.user.username);
+                    }
+                    
+                    // Load user statistics
+                    await loadUserStats();
+                    
+                } catch (error) {
+                    console.error('❌ Failed to load profile:', error);
+                    document.getElementById('username').textContent = 'Guest';
+                }
+            }
+        }
+        
+        /**
+         * Load user statistics from backend
+         */
+        async function loadUserStats() {
+            try {
+                const stats = await window.API.getStats();
+                
+                if (stats && stats.stats) {
+                    // Update stats display with user data
+                    if (stats.stats.total_scans !== undefined) {
+                        document.getElementById('totalScans').textContent = stats.stats.total_scans;
+                    }
+                    if (stats.stats.phishing_detected !== undefined) {
+                        document.getElementById('threatsBlocked').textContent = stats.stats.phishing_detected;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load user stats:', error);
+            }
+        }
+        
+        /**
+         * Handle logout
+         */
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear authentication
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                
+                // Update UI to guest mode
+                document.getElementById('username').textContent = 'Guest';
+                
+                // Show success message
+                if (typeof showToast === 'function') {
+                    showToast('Logged out successfully', 'info');
+                }
+                
+                // Reset stats to default
+                document.getElementById('totalScans').textContent = '0';
+                document.getElementById('threatsBlocked').textContent = '0';
+            }
+        }
+        
+        /**
+         * Load and display user scan history
+         */
+        async function loadUserHistory() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const history = await window.API.getScanHistory(50);
+                
+                if (history && history.history && history.history.length > 0) {
+                    displayHistoryItems(history.history);
+                }
+            } catch (error) {
+                console.error('Failed to load history:', error);
+            }
+        }
+
+        /**
+         * Display history items in sidebar
+         */
+        function displayHistoryItems(items) {
+            const historyList = document.getElementById('historyList');
+            if (!historyList || !items || items.length === 0) return;
+
+            historyList.innerHTML = items.map(item => {
+                const classification = item.prediction || item.classification;
+                const statusClass = classification === 'Phishing' || classification === 'PHISHING' ? 'danger' : 'safe';
+                const iconClass = statusClass === 'danger' ? 'fa-exclamation-triangle' : 'fa-check-circle';
+                
+                return `
+                    <div class="history-item">
+                        <div class="history-icon ${statusClass}">
+                            <i class="fas ${iconClass}"></i>
+                        </div>
+                        <div class="history-details">
+                            <div class="history-url">${item.url.substring(0, 40)}${item.url.length > 40 ? '...' : ''}</div>
+                            <div class="history-meta">
+                                ${classification} • ${new Date(item.timestamp).toLocaleString()}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Load history when sidebar is opened
+        const historyToggle = document.getElementById('historyToggle');
+        if (historyToggle) {
+            historyToggle.addEventListener('click', function() {
+                loadUserHistory();
+            });
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            // DOM is already loaded
+            initializeApp();
+        }
+    </script>
 </body>
 </html>
