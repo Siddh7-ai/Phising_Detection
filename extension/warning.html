@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>⚠️ Warning - Suspicious Website Detected</title>
   <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --green-primary: #22c55e;
+      --green-dark: #16a34a;
+      --danger-primary: #ef4444;
+      --danger-dark: #dc2626;
+      --warning-primary: #f59e0b;
+      --warning-dark: #d97706;
+      --dark-primary: #111827;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+    }
+    
     * {
       margin: 0;
       padding: 0;
@@ -13,7 +26,7 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--danger-primary) 0%, var(--danger-dark) 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -23,18 +36,20 @@
     
     .container {
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       max-width: 700px;
       width: 100%;
       padding: 50px 40px;
       text-align: center;
+      border-top: 5px solid var(--danger-primary);
     }
     
     .warning-icon {
       font-size: 100px;
       margin-bottom: 20px;
       animation: pulse 2s infinite;
+      filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.3));
     }
     
     @keyframes pulse {
@@ -43,23 +58,27 @@
     }
     
     h1 {
-      color: #dc3545;
+      color: var(--danger-primary);
       font-size: 32px;
       margin-bottom: 10px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
     }
     
     .subtitle {
       color: #666;
       font-size: 18px;
       margin-bottom: 30px;
+      font-weight: 500;
     }
     
     .info-box {
-      background: #f8f9fa;
-      border-radius: 8px;
+      background: var(--gray-100);
+      border-radius: 12px;
       padding: 25px;
       margin: 25px 0;
       text-align: left;
+      border: 1px solid var(--gray-200);
     }
     
     .info-row {
@@ -71,52 +90,69 @@
     }
     
     .info-label {
-      font-weight: bold;
-      color: #333;
+      font-weight: 700;
+      color: var(--dark-primary);
       display: block;
       margin-bottom: 5px;
+      font-size: 13px;
+      letter-spacing: 0.3px;
     }
     
     .info-value {
       color: #666;
       word-break: break-all;
       font-size: 14px;
+      line-height: 1.5;
     }
     
     .risk-high {
-      color: #dc3545;
-      font-weight: bold;
+      color: var(--danger-primary);
+      font-weight: 800;
       font-size: 18px;
+      letter-spacing: 0.5px;
     }
     
     .risk-medium {
-      color: #ff9800;
-      font-weight: bold;
+      color: var(--warning-primary);
+      font-weight: 800;
       font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+    
+    .risk-low {
+      color: var(--green-primary);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.5px;
     }
     
     .warning-box {
-      background: #fff3cd;
-      border-left: 4px solid #ffc107;
-      padding: 15px;
+      background: #fef3c7;
+      border-left: 5px solid var(--warning-primary);
+      padding: 20px;
       margin: 20px 0;
       text-align: left;
-      border-radius: 4px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.1);
     }
     
     .warning-box strong {
       display: block;
-      margin-bottom: 8px;
-      color: #856404;
+      margin-bottom: 12px;
+      color: var(--warning-dark);
+      font-size: 15px;
+      font-weight: 700;
     }
     
     .warning-box ul {
       margin-left: 20px;
-      color: #856404;
+      color: var(--warning-dark);
+      line-height: 1.8;
     }
     
     .warning-box li {
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      font-size: 14px;
     }
     
     .buttons {
@@ -127,48 +163,84 @@
     
     .btn {
       flex: 1;
-      padding: 15px 30px;
+      padding: 16px 30px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
+      letter-spacing: 0.3px;
     }
     
     .btn-safe {
-      background: #28a745;
+      background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-dark) 100%);
       color: white;
+      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
     }
     
     .btn-safe:hover {
-      background: #218838;
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+    }
+    
+    .btn-safe:active {
+      transform: translateY(0);
     }
     
     .btn-proceed {
-      background: #6c757d;
+      background: #6b7280;
       color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
     .btn-proceed:hover {
-      background: #5a6268;
+      background: #4b5563;
+      transform: translateY(-1px);
+    }
+    
+    .btn-proceed:active {
+      transform: translateY(0);
     }
     
     .footer {
-      margin-top: 25px;
+      margin-top: 30px;
       font-size: 13px;
       color: #999;
+      line-height: 1.6;
     }
     
     .shield-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      margin-top: 10px;
-      font-size: 12px;
+      gap: 8px;
+      margin-top: 15px;
+      font-size: 13px;
       color: #666;
+      font-weight: 600;
+    }
+    
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 25px;
+      }
+      
+      h1 {
+        font-size: 26px;
+      }
+      
+      .subtitle {
+        font-size: 16px;
+      }
+      
+      .buttons {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -226,7 +298,7 @@
         🛡️ Protected by Phishing Detection Shield
       </div>
       <div style="margin-top: 10px; font-size: 11px;">
-        Powered by Machine Learning • 95% Accuracy
+        Powered by Machine Learning • AI-Driven Protection
       </div>
     </div>
   </div>

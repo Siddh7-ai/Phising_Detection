@@ -69,13 +69,17 @@
     const dialog = document.createElement('div');
     dialog.style.cssText = `
       background: white;
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 30px;
       max-width: 500px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      border-top: 4px solid ${riskColor};
     `;
     
-    const riskColor = result.risk_level === 'high' ? '#dc3545' : '#ff9800';
+    // Green theme colors
+    const riskColor = result.risk_level === 'high' ? '#ef4444' : '#f59e0b';
+    const greenPrimary = '#22c55e';
+    const greenDark = '#16a34a';
     
     dialog.innerHTML = `
       <div style="text-align: center; margin-bottom: 20px;">
@@ -114,26 +118,30 @@
         <button id="phishing-go-back" style="
           flex: 1;
           padding: 12px 20px;
-          background: #28a745;
+          background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
           color: white;
           border: none;
-          border-radius: 5px;
+          border-radius: 8px;
           font-size: 16px;
           font-weight: bold;
           cursor: pointer;
-        ">
+          box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+          transition: all 0.3s ease;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(34, 197, 94, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 14px rgba(34, 197, 94, 0.3)';">
           ✓ Go Back (Safe)
         </button>
         <button id="phishing-continue" style="
           flex: 1;
           padding: 12px 20px;
-          background: #6c757d;
+          background: #6b7280;
           color: white;
           border: none;
-          border-radius: 5px;
+          border-radius: 8px;
           font-size: 16px;
           cursor: pointer;
-        ">
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+        " onmouseover="this.style.background='#4b5563'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='#6b7280'; this.style.transform='translateY(0)';">
           Continue Anyway
         </button>
       </div>

@@ -1,4 +1,5 @@
-// Popup Script - Complete Rewrite for Auto-Scan with Charts & Screenshot
+// Popup Script - Complete Integration with Green Theme
+// PhishGuard AI Extension - Auto-Scan with Charts & Screenshot
 
 (function() {
   'use strict';
@@ -12,6 +13,9 @@
   document.addEventListener('DOMContentLoaded', init);
   
   function init() {
+    // Set default theme state
+    document.body.classList.add('safe');
+    
     // Get current tab info
     getCurrentTab();
     
@@ -188,7 +192,7 @@
   }
   
   /**
-   * Display scan result with animations
+   * Display scan result with animations and theme updates
    */
   function displayResult(result, screenshot) {
     // Hide loading
@@ -208,37 +212,80 @@
       document.getElementById('screenshot-placeholder').style.display = 'flex';
     }
     
-    // Determine if phishing
-    const isPhishing = result.classification === 'Phishing' || result.classification === 'Suspicious';
+    // Determine classification and threat level
+    const classification = result.classification.toLowerCase();
+    let state = 'safe';
+    let stateClass = 'safe';
+    let isPhishing = false;
     
-    // Update header
+    if (classification === 'phishing' || classification === 'malicious') {
+      state = 'phishing';
+      stateClass = 'danger';
+      isPhishing = true;
+    } else if (classification === 'suspicious' || classification === 'warning') {
+      state = 'warning';
+      stateClass = 'warning';
+      isPhishing = true; // Treat suspicious as potentially harmful
+    } else {
+      state = 'safe';
+      stateClass = 'safe';
+      isPhishing = false;
+    }
+    
+    // Update body theme class
+    updateBodyTheme(state);
+    
+    // Update result header
+    updateResultHeader(state, stateClass, classification);
+    
+    // Animate confidence meter
+    animateConfidenceMeter(result.confidence, stateClass);
+    
+    // Populate metrics
+    populateMetrics(result.metrics, stateClass, classification);
+  }
+  
+  /**
+   * Update body theme class for dynamic color switching
+   */
+  function updateBodyTheme(state) {
+    // Remove all state classes
+    document.body.classList.remove('safe', 'phishing', 'warning');
+    
+    // Add new state class
+    document.body.classList.add(state);
+  }
+  
+  /**
+   * Update result header with appropriate icons and text
+   */
+  function updateResultHeader(state, stateClass, classification) {
     const resultIcon = document.getElementById('result-icon');
     const resultTitle = document.getElementById('result-title');
     const resultSubtitle = document.getElementById('result-subtitle');
     
-    if (isPhishing) {
-      resultIcon.textContent = '⚠️';
-      resultTitle.textContent = result.classification === 'Suspicious' ? 'Suspicious Website' : 'Phishing Detected';
-      resultTitle.className = 'result-title danger';
-      resultSubtitle.textContent = 'This website appears to be malicious';
-    } else {
+    if (state === 'safe') {
       resultIcon.textContent = '✅';
       resultTitle.textContent = 'Website Appears Safe';
       resultTitle.className = 'result-title safe';
       resultSubtitle.textContent = 'No immediate threats detected';
+    } else if (state === 'phishing') {
+      resultIcon.textContent = '🚨';
+      resultTitle.textContent = 'Phishing Detected!';
+      resultTitle.className = 'result-title danger';
+      resultSubtitle.textContent = 'This website appears to be malicious';
+    } else if (state === 'warning') {
+      resultIcon.textContent = '⚠️';
+      resultTitle.textContent = 'Suspicious Elements Found';
+      resultTitle.className = 'result-title warning';
+      resultSubtitle.textContent = 'Proceed with caution';
     }
-    
-    // Animate confidence meter
-    animateConfidenceMeter(result.confidence, isPhishing);
-    
-    // Populate metrics
-    populateMetrics(result.metrics, isPhishing);
   }
   
   /**
-   * Animate circular confidence meter
+   * Animate circular confidence meter with theme colors
    */
-  function animateConfidenceMeter(confidence, isPhishing) {
+  function animateConfidenceMeter(confidence, stateClass) {
     const circle = document.getElementById('confidence-circle');
     const valueEl = document.getElementById('confidence-value');
     
@@ -246,16 +293,17 @@
     const radius = 65;
     const circumference = 2 * Math.PI * radius;
     
-    // Set color based on result
-    const color = isPhishing ? '#dc3545' : '#28a745';
-    circle.style.stroke = color;
-    valueEl.style.color = color;
+    // Apply state class to circle (use setAttribute for SVG)
+    circle.setAttribute('class', `confidence-progress ${stateClass}`);
     
-    // Reset
-    circle.style.strokeDasharray = circumference;
+    // Apply state class to value (regular HTML element)
+    valueEl.className = `confidence-value ${stateClass}`;
+    
+    // Reset circle
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
     circle.style.strokeDashoffset = circumference;
     
-    // Animate
+    // Animate after short delay
     setTimeout(() => {
       const offset = circumference - (confidence / 100) * circumference;
       circle.style.strokeDashoffset = offset;
@@ -284,18 +332,18 @@
   }
   
   /**
-   * Populate metrics box
+   * Populate metrics box with theme-aware status colors
    */
-  function populateMetrics(metrics, isPhishing) {
+  function populateMetrics(metrics, stateClass, classification) {
     const metricsBox = document.getElementById('metrics-box');
     metricsBox.innerHTML = '';
     
-    // Create metric items
+    // Create metric items with proper status
     const items = [
       {
         label: 'Classification',
-        value: isPhishing ? 'Phishing' : 'Legitimate',
-        status: isPhishing ? 'bad' : 'good'
+        value: classification.charAt(0).toUpperCase() + classification.slice(1),
+        status: stateClass === 'safe' ? 'good' : (stateClass === 'warning' ? 'warning' : 'bad')
       },
       {
         label: 'Domain Age',
@@ -310,7 +358,7 @@
       {
         label: 'URL Length',
         value: metrics.url_length || 'N/A',
-        status: metrics.url_length > 75 ? 'warning' : 'good'
+        status: getUrlLengthStatus(metrics.url_length)
       },
       {
         label: 'Suspicious Keywords',
@@ -328,11 +376,16 @@
       const metricItem = document.createElement('div');
       metricItem.className = 'metric-item';
       
-      metricItem.innerHTML = `
-        <span class="metric-label">${item.label}</span>
-        <span class="metric-value ${item.status}">${item.value}</span>
-      `;
+      const metricLabel = document.createElement('span');
+      metricLabel.className = 'metric-label';
+      metricLabel.textContent = item.label;
       
+      const metricValue = document.createElement('span');
+      metricValue.className = `metric-value ${item.status}`;
+      metricValue.textContent = item.value;
+      
+      metricItem.appendChild(metricLabel);
+      metricItem.appendChild(metricValue);
       metricsBox.appendChild(metricItem);
     });
   }
@@ -352,34 +405,82 @@
   }
   
   /**
-   * Show error message
+   * Determine status based on URL length
+   */
+  function getUrlLengthStatus(length) {
+    if (!length || length === 'N/A') return 'warning';
+    
+    const numLength = parseInt(length);
+    if (isNaN(numLength)) return 'warning';
+    
+    if (numLength > 100) return 'bad';
+    if (numLength > 75) return 'warning';
+    return 'good';
+  }
+  
+  /**
+   * Show error message with red theme
    */
   function showError(message) {
+    // Update body theme to phishing/error state
+    updateBodyTheme('phishing');
+    
+    // Hide loading
     document.getElementById('loading-container').classList.remove('active');
     
+    // Show result container
     const resultContainer = document.getElementById('result-container');
     resultContainer.classList.add('active');
     
+    // Update screenshot placeholder
     document.getElementById('screenshot-img').style.display = 'none';
-    document.getElementById('screenshot-placeholder').style.display = 'flex';
+    const placeholder = document.getElementById('screenshot-placeholder');
+    placeholder.style.display = 'flex';
     document.querySelector('.screenshot-placeholder-icon').textContent = '⚠️';
     document.querySelector('.screenshot-placeholder div:last-child').textContent = 'Error occurred';
     
-    document.getElementById('result-icon').textContent = '❌';
-    document.getElementById('result-title').textContent = 'Scan Failed';
-    document.getElementById('result-title').className = 'result-title danger';
-    document.getElementById('result-subtitle').textContent = message;
+    // Update result header
+    const resultIcon = document.getElementById('result-icon');
+    const resultTitle = document.getElementById('result-title');
+    const resultSubtitle = document.getElementById('result-subtitle');
     
-    document.getElementById('metrics-box').innerHTML = `
-      <div class="metric-item">
-        <span class="metric-label">Error</span>
-        <span class="metric-value bad">${message}</span>
-      </div>
-    `;
+    resultIcon.textContent = '❌';
+    resultTitle.textContent = 'Scan Failed';
+    resultTitle.className = 'result-title danger';
+    resultSubtitle.textContent = message;
     
+    // Update confidence meter
     const circle = document.getElementById('confidence-circle');
-    circle.style.strokeDashoffset = 2 * Math.PI * 65;
-    document.getElementById('confidence-value').textContent = '0%';
+    const valueEl = document.getElementById('confidence-value');
+    
+    // Use setAttribute for SVG element
+    circle.setAttribute('class', 'confidence-progress danger');
+    valueEl.className = 'confidence-value danger';
+    
+    const radius = 65;
+    const circumference = 2 * Math.PI * radius;
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = circumference;
+    valueEl.textContent = '0%';
+    
+    // Update metrics
+    const metricsBox = document.getElementById('metrics-box');
+    metricsBox.innerHTML = '';
+    
+    const metricItem = document.createElement('div');
+    metricItem.className = 'metric-item';
+    
+    const metricLabel = document.createElement('span');
+    metricLabel.className = 'metric-label';
+    metricLabel.textContent = 'Error';
+    
+    const metricValue = document.createElement('span');
+    metricValue.className = 'metric-value bad';
+    metricValue.textContent = message;
+    
+    metricItem.appendChild(metricLabel);
+    metricItem.appendChild(metricValue);
+    metricsBox.appendChild(metricItem);
   }
   
 })();
