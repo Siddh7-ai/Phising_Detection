@@ -1,14 +1,15 @@
 /**
  * PhishGuard AI - API Client
  * Handles all backend communication
+ * FIXED: Correct endpoint paths to match backend routes
  */
 
 class APIClient {
     constructor() {
-        // Use environment variable or default to localhost
+        // FIXED: Remove /api prefix since backend routes include it
         this.baseURL = window.location.hostname === 'localhost' 
-            ? 'http://localhost:5000/api'
-            : '/api';
+            ? 'http://localhost:5000'
+            : '';
         
         console.log('✅ APIClient initialized with baseURL:', this.baseURL);
     }
@@ -135,12 +136,12 @@ class APIClient {
 
     /**
      * Scan URL (public endpoint - no auth required)
-     * This is the main method that returns standardized response
+     * FIXED: Uses /api/scan endpoint
      */
     async scanURL(url) {
         console.log('🔍 Scanning URL:', url);
 
-        const response = await fetch(`${this.baseURL}/scan`, {
+        const response = await fetch(`${this.baseURL}/api/scan`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -155,37 +156,21 @@ class APIClient {
             throw new Error(data.error || 'Scan failed');
         }
 
-        // Standardize the response format
-        // Backend may return different field names, normalize them here
-        const standardized = {
-            url: data.url || url,
-            classification: data.prediction || data.classification || 'UNKNOWN',
-            confidence: data.confidence || 0,
-            riskLevel: data.risk_level || data.riskLevel || 'Unknown',
-            model: data.model || 'Unknown',
-            metrics: {
-                https: data.https !== undefined ? data.https : (url.startsWith('https')),
-                urlLength: data.url_length || data.urlLength || url.length,
-                riskLevel: data.risk_level || data.riskLevel || 'Unknown',
-                domainAge: data.domain_age || data.domainAge || 'Unknown',
-                features: data.features || {}
-            },
-            timestamp: data.timestamp || new Date().toISOString()
-        };
-
-        console.log('✅ Standardized response:', standardized);
-        return standardized;
+        // ✅ Return the data AS-IS - backend already formats it correctly
+        console.log('✅ Final response:', data);
+        return data;
     }
 
     /**
      * Scan URL (authenticated endpoint - saves to history)
+     * FIXED: Uses /api/predict endpoint
      */
     async scanURLAuthenticated(url) {
         const token = this.getToken();
         
         console.log('🔍 Scanning URL (authenticated):', url);
 
-        const response = await fetch(`${this.baseURL}/predict`, {
+        const response = await fetch(`${this.baseURL}/api/predict`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -201,26 +186,9 @@ class APIClient {
             throw new Error(data.error || 'Scan failed');
         }
 
-        // Standardize the response format
-        const standardized = {
-            url: data.url || url,
-            classification: data.prediction || data.classification || 'UNKNOWN',
-            confidence: data.confidence || 0,
-            riskLevel: data.risk_level || data.riskLevel || 'Unknown',
-            model: data.model || 'Unknown',
-            metrics: {
-                https: data.https !== undefined ? data.https : (url.startsWith('https')),
-                urlLength: data.url_length || data.urlLength || url.length,
-                riskLevel: data.risk_level || data.riskLevel || 'Unknown',
-                domainAge: data.domain_age || data.domainAge || 'Unknown',
-                features: data.features || {}
-            },
-            timestamp: data.timestamp || new Date().toISOString(),
-            saved: data.saved || false
-        };
-
-        console.log('✅ Standardized response (auth):', standardized);
-        return standardized;
+        // ✅ Return the data AS-IS - backend already formats it correctly
+        console.log('✅ Final response (auth):', data);
+        return data;
     }
 
     /**
@@ -243,7 +211,7 @@ class APIClient {
             throw new Error('Not authenticated');
         }
 
-        const response = await fetch(`${this.baseURL}/history?limit=${limit}`, {
+        const response = await fetch(`${this.baseURL}/api/history?limit=${limit}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -268,7 +236,7 @@ class APIClient {
             throw new Error('Not authenticated');
         }
 
-        const response = await fetch(`${this.baseURL}/stats`, {
+        const response = await fetch(`${this.baseURL}/api/stats`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

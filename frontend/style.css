@@ -9,6 +9,11 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+
 :root {
     --bg-primary: #0a0e1a;
     --bg-secondary: #131825;
@@ -129,6 +134,7 @@ body {
     text-align: center;
     margin-bottom: 40px;
     animation: fadeInDown 0.8s ease-out;
+    position: relative;   /* ADD THIS */
 }
 
 .header-content {
@@ -220,6 +226,35 @@ body {
     gap: 15px;
 }
 
+.user-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.user-badge i {
+    color: var(--accent-primary);
+}
+
+.user-badge:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+}
+
+#username {
+    color: var(--accent-primary);
+    text-shadow: 0 0 10px var(--accent-primary);
+}
+
+
 .icon-btn {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
@@ -239,6 +274,16 @@ body {
     color: var(--bg-primary);
     transform: rotate(15deg);
     box-shadow: var(--shadow-glow);
+}
+
+.logout-btn {
+    border-color: rgba(255, 0, 110, 0.4);
+}
+
+.logout-btn:hover {
+    background: var(--accent-danger);
+    color: white;
+    transform: rotate(0deg);
 }
 
 /* ------------------------------------------------------------------
@@ -914,19 +959,6 @@ body {
     transition: transform 0.3s ease;
 }
 
-.details-content {
-    margin-top: 20px;
-    padding: 20px;
-    background: var(--bg-tertiary);
-    border-radius: 8px;
-    display: none;
-    min-height: 300px;
-}
-
-.details-content:not(.hidden) {
-    display: block;
-}
-
 #featuresChart {
     width: 100% !important;
     height: 300px !important;
@@ -1302,6 +1334,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #00d17a;
 }
+
 /* ============================================================
    AUTH MODAL STYLES
    Add this section to your style.css file

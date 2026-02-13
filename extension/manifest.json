@@ -1,59 +1,49 @@
 {
   "manifest_version": 3,
-  "name": "Phishing Detection Shield",
-  "version": "2.0.0",
-  "description": "AI-powered phishing detection that protects you from malicious links",
-  
+  "name": "PhishGuard AI",
+  "version": "3.0.0",
+  "description": "AI-powered phishing detection - 100% backend ML driven",
+
   "permissions": [
-    "storage",
-    "tabs",
-    "webRequest",
     "webNavigation",
-    "activeTab",
-    "scripting"
+    "tabs",
+    "storage",
+    "activeTab"
   ],
-  
+
   "host_permissions": [
     "<all_urls>",
-    "http://localhost/*",
-    "http://127.0.0.1/*"
+    "http://127.0.0.1:5000/*"
   ],
-  
+
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "service_worker.js",
+    "type": "module"
   },
-  
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "run_at": "document_idle"
-    },
-    {
-      "matches": ["*://web.whatsapp.com/*"],
-      "js": ["whatsapp.js"],
-      "run_at": "document_idle"
-    }
-  ],
-  
+
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
+      "16":  "icons/icon16.png",
+      "48":  "icons/icon48.png",
       "128": "icons/icon128.png"
     }
   },
-  
+
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  
+
   "web_accessible_resources": [
     {
-      "resources": ["warning.html"],
+      "resources": [
+        "blocked.html",
+        "blocked.css",
+        "blocked_page.js",
+        "popup_logic.js"
+      ],
       "matches": ["<all_urls>"]
     }
   ]

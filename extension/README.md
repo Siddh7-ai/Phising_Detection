@@ -22,7 +22,7 @@
 - [Testing](#-testing)
 - [Contributing](#-contributing)
 - [License](#-license)
-- [Team](#-team)
+- [Team](#-teams)
 
 ---
 

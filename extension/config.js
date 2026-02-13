@@ -1,29 +1,52 @@
-// Extension Configuration
+// Configuration - Whitelist Only
+
 const CONFIG = {
-  // Backend API endpoint - UPDATED TO CORRECT ENDPOINT
-  API_URL: 'http://localhost:5000/api/scan',
+  // Backend API endpoint
+  API_URL: 'http://127.0.0.1:5000/api/scan',
   
-  // Detection thresholds
-  CONFIDENCE_THRESHOLD: 0.7,
-  HIGH_RISK_THRESHOLD: 0.8,
+  // Cache duration (15 minutes)
+  CACHE_TTL_MS: 15 * 60 * 1000,
   
-  // Features
-  ENABLE_WHATSAPP_PROTECTION: true,
-  ENABLE_UNIVERSAL_PROTECTION: true,
+  // Request timeout
+  REQUEST_TIMEOUT_MS: 10000,
   
-  // UI Settings
-  SHOW_NOTIFICATIONS: true,
-  AUTO_BLOCK_HIGH_RISK: false,
-  
-  // Cache settings
-  CACHE_DURATION: 3600000,  // 1 hour in milliseconds
-  
-  // Whitelist domains (always allow)
+  // Whitelist - Skip API calls for these domains
   WHITELIST: [
+    // Development
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    
+    // Indian Universities
+    'charusat.edu.in',
+    'charusat.ac.in',
+    'iitb.ac.in',
+    'iitd.ac.in',
+    'iitm.ac.in',
+    'iitk.ac.in',
+    'iisc.ac.in',
+    'bits-pilani.ac.in',
+    'dtu.ac.in',
+    'vit.ac.in',
+    
+    // Indian Government
+    'india.gov.in',
+    'mygov.in',
+    'uidai.gov.in',
+    'incometax.gov.in',
+    'rbi.org.in',
+    'irctc.co.in',
+    
+    // Indian Banks
+    'sbi.co.in',
+    'hdfcbank.com',
+    'icicibank.com',
+    'axisbank.com',
+    
+    // Global Tech
     'google.com',
     'youtube.com',
     'github.com',
-    'stackoverflow.com',
     'microsoft.com',
     'apple.com',
     'amazon.com',
@@ -31,16 +54,11 @@ const CONFIG = {
     'twitter.com',
     'linkedin.com',
     'instagram.com',
-    'reddit.com',
-    'wikipedia.org'
-  ],
-  
-  // Performance
-  REQUEST_TIMEOUT: 5000,  // 5 seconds
-  MAX_RETRIES: 2
+    'wikipedia.org',
+    'cloudflare.com',
+    'mozilla.org'
+  ]
 };
 
-// Export for use in other scripts
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = CONFIG;
-}
+// Export for ES modules
+export default CONFIG;

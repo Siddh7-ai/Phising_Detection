@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Phishing Detection Shield</title>
   <style>
-    /* ===== CSS VARIABLES - COLOR SYSTEM ===== */
     :root {
-      /* Primary Green Colors */
       --green-primary: #22c55e;
       --green-dark: #16a34a;
       --green-darker: #0f9d58;
       --green-light: #4ade80;
       --green-extra-light: #86efac;
       
-      /* Neutral Colors */
       --dark-primary: #111827;
       --dark-secondary: #1f2937;
       --dark-tertiary: #374151;
@@ -25,18 +22,15 @@
       --gray-500: #6b7280;
       --gray-600: #4b5563;
       
-      /* Background Colors */
       --bg-primary: #f8fafc;
       --bg-secondary: #f9fafb;
       --bg-white: #ffffff;
       
-      /* Status Colors */
       --danger-primary: #ef4444;
       --danger-dark: #dc2626;
       --warning-primary: #f59e0b;
       --warning-dark: #d97706;
       
-      /* Shadows */
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -55,9 +49,10 @@
       min-height: 500px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg-primary);
+      border-radius: 16px;
+      overflow: hidden;
     }
     
-    /* ===== HEADER ===== */
     .header {
       background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-dark) 50%, var(--green-darker) 100%);
       color: white;
@@ -65,6 +60,7 @@
       text-align: center;
       box-shadow: var(--shadow-md);
       position: relative;
+      border-radius: 16px 16px 0 0;
     }
     
     .header::after {
@@ -97,9 +93,8 @@
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
     
-    /* ===== SCAN SECTION ===== */
     .scan-section {
-      padding: 24px 20px;
+      padding: 24px 20px 16px;
       text-align: center;
     }
     
@@ -109,7 +104,7 @@
       background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-dark) 100%);
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
@@ -135,8 +130,171 @@
       transform: none;
       box-shadow: var(--shadow-sm);
     }
+
+    /* NEW: Info Section Below Scan Button */
+    .info-section {
+      padding: 0 20px 20px;
+    }
+
+    /* Quick Stats Dashboard */
+    .quick-stats {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.04) 100%);
+      border: 1.5px solid rgba(34, 197, 94, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--green-dark);
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: -0.5px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+
+    /* Security Status Banner */
+    .security-status {
+      background: linear-gradient(135deg, var(--bg-white) 0%, var(--gray-100) 100%);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green-primary);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.1);
+      }
+    }
+
+    .status-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dark-secondary);
+    }
+
+    .status-badge {
+      background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-dark) 100%);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Security Tips Carousel */
+    .tips-carousel {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 1.5px solid #fbbf24;
+      border-radius: 10px;
+      padding: 12px 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .tips-carousel::before {
+      content: '💡';
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      z-index: 1;
+    }
+
+    .tip-content {
+      padding-left: 35px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #92400e;
+      line-height: 1.5;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tip-text {
+      opacity: 0;
+      position: absolute;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .tip-text.active {
+      opacity: 1;
+      position: relative;
+    }
+
+    .tip-indicator {
+      position: absolute;
+      bottom: 8px;
+      right: 12px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .tip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(146, 64, 14, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .tip-dot.active {
+      background: #92400e;
+      width: 16px;
+      border-radius: 3px;
+    }
     
-    /* ===== LOADING ANIMATION ===== */
     .loading-container {
       display: none;
       padding: 40px 20px;
@@ -179,7 +337,6 @@
       font-weight: 500;
     }
     
-    /* ===== RESULT SECTION ===== */
     .result-container {
       display: none;
       padding: 20px;
@@ -189,10 +346,9 @@
       display: block;
     }
     
-    /* ===== SCREENSHOT ===== */
     .screenshot-box {
       background: var(--bg-white);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 10px;
       margin-bottom: 20px;
       box-shadow: var(--shadow-md);
@@ -223,7 +379,6 @@
       opacity: 0.6;
     }
     
-    /* ===== RESULT HEADER ===== */
     .result-header {
       text-align: center;
       margin-bottom: 24px;
@@ -260,7 +415,6 @@
       font-weight: 500;
     }
     
-    /* ===== CONFIDENCE CHART ===== */
     .chart-container {
       background: var(--bg-white);
       border-radius: 12px;
@@ -304,7 +458,6 @@
       filter: drop-shadow(0 0 4px rgba(34, 197, 94, 0.4));
     }
     
-    /* Dynamic stroke colors based on state */
     .confidence-progress.safe {
       stroke: var(--green-primary);
     }
@@ -356,21 +509,38 @@
       letter-spacing: 0.5px;
     }
     
-    /* ===== METRICS BOX ===== */
     .metrics-box {
       background: var(--bg-white);
       border-radius: 12px;
       padding: 18px;
       box-shadow: var(--shadow-md);
       border: 1px solid var(--gray-200);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .metric-section-header {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 12px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--gray-200);
+    }
+    
+    .metric-section-header:first-child {
+      margin-top: 0;
     }
     
     .metric-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--gray-200);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-100);
     }
     
     .metric-item:last-child {
@@ -402,14 +572,13 @@
       color: var(--warning-dark);
     }
     
-    /* ===== RESCAN BUTTON ===== */
     .rescan-btn {
       width: 100%;
       padding: 14px;
       background: var(--green-primary);
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
@@ -430,7 +599,6 @@
       box-shadow: var(--shadow-sm);
     }
     
-    /* ===== FOOTER ===== */
     .footer {
       text-align: center;
       padding: 16px;
@@ -439,11 +607,9 @@
       font-weight: 500;
       letter-spacing: 0.3px;
       line-height: 1.6;
+      border-radius: 0 0 16px 16px;
     }
     
-    /* ===== STATE-BASED CLASSES ===== */
-    
-    /* Safe State */
     body.safe .header {
       background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-dark) 50%, var(--green-darker) 100%);
     }
@@ -457,7 +623,6 @@
       background: linear-gradient(135deg, var(--green-light) 0%, var(--green-primary) 100%);
     }
     
-    /* Phishing/Danger State */
     body.phishing .header {
       background: linear-gradient(135deg, var(--danger-primary) 0%, var(--danger-dark) 100%);
     }
@@ -485,8 +650,16 @@
     body.phishing .rescan-btn:hover {
       background: var(--danger-dark);
     }
+
+    body.phishing .status-indicator {
+      background: var(--danger-primary);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+    }
+
+    body.phishing .status-badge {
+      background: linear-gradient(135deg, var(--danger-primary) 0%, var(--danger-dark) 100%);
+    }
     
-    /* Warning State */
     body.warning .header {
       background: linear-gradient(135deg, var(--warning-primary) 0%, var(--warning-dark) 100%);
     }
@@ -514,48 +687,91 @@
     body.warning .rescan-btn:hover {
       background: var(--warning-dark);
     }
+
+    body.warning .status-indicator {
+      background: var(--warning-primary);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+
+    body.warning .status-badge {
+      background: linear-gradient(135deg, var(--warning-primary) 0%, var(--warning-dark) 100%);
+    }
   </style>
 </head>
 <body>
   <div class="header">
     <div class="shield-icon">🛡️</div>
     <h1>Phishing Detection Shield</h1>
-    <p>AI-Powered Protection</p>
+    <p>AI-Powered Modular Analysis</p>
   </div>
   
-  <!-- Scan Button Section -->
   <div class="scan-section">
     <button class="scan-btn" id="scan-btn">
       🔍 Scan Current Page
     </button>
   </div>
+
+  <!-- NEW: Info Section -->
+  <div class="info-section" id="info-section">
+    <!-- Quick Stats Dashboard -->
+    <div class="quick-stats">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-value" id="scans-today">0</span>
+          <span class="stat-label">Scans<br>Today</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="threats-blocked">0</span>
+          <span class="stat-label">Threats<br>Blocked</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="uptime">100%</span>
+          <span class="stat-label">System<br>Uptime</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Status Banner -->
+    <div class="security-status">
+      <div class="status-left">
+        <div class="status-indicator"></div>
+        <span class="status-text">Real-time Protection</span>
+      </div>
+      <div class="status-badge">ACTIVE</div>
+    </div>
+
+    <!-- Security Tips Carousel -->
+    <div class="tips-carousel">
+      <div class="tip-content">
+        <div class="tip-text active" data-tip="0">Always verify the URL before entering passwords or personal information</div>
+        <div class="tip-text" data-tip="1">Look for HTTPS and the padlock icon in legitimate websites</div>
+        <div class="tip-text" data-tip="2">Be cautious of urgent messages asking for immediate action</div>
+        <div class="tip-text" data-tip="3">Never click links in suspicious emails or text messages</div>
+        <div class="tip-text" data-tip="4">Enable two-factor authentication on important accounts</div>
+      </div>
+      <div class="tip-indicator">
+        <div class="tip-dot active" data-dot="0"></div>
+        <div class="tip-dot" data-dot="1"></div>
+        <div class="tip-dot" data-dot="2"></div>
+        <div class="tip-dot" data-dot="3"></div>
+        <div class="tip-dot" data-dot="4"></div>
+      </div>
+    </div>
+  </div>
   
-  <!-- Loading Animation -->
   <div class="loading-container" id="loading-container">
     <div class="spinner-ring"></div>
     <div class="loading-text">Analyzing webpage...</div>
     <div class="loading-url" id="loading-url"></div>
   </div>
   
-  <!-- Result Section -->
   <div class="result-container" id="result-container">
-    <!-- Screenshot -->
-    <div class="screenshot-box" id="screenshot-box">
-      <img id="screenshot-img" style="display:none;" />
-      <div class="screenshot-placeholder" id="screenshot-placeholder">
-        <div class="screenshot-placeholder-icon">🚫</div>
-        <div>Screenshot unavailable</div>
-      </div>
-    </div>
-    
-    <!-- Result Header -->
     <div class="result-header">
       <div class="result-icon" id="result-icon">✅</div>
       <div class="result-title" id="result-title">Website Appears Safe</div>
       <div class="result-subtitle" id="result-subtitle">No immediate threats detected</div>
     </div>
     
-    <!-- Confidence Chart -->
     <div class="chart-container">
       <div class="chart-title">Confidence Score</div>
       <div class="confidence-meter">
@@ -570,20 +786,18 @@
       </div>
     </div>
     
-    <!-- Metrics -->
     <div class="metrics-box" id="metrics-box">
-      <!-- Will be populated dynamically -->
+      <!-- Populated by JavaScript with section headers -->
     </div>
     
-    <!-- Rescan Button -->
     <button class="rescan-btn" id="rescan-btn">🔄 Scan Again</button>
   </div>
   
   <div class="footer">
-    Powered by Machine Learning<br>
-    Version 2.0.0
+    Modular AI Detection System<br>
+    Version 2.1.0
   </div>
   
-  <script src="popup.js"></script>
+  <script src="popup_logic.js"></script>
 </body>
 </html>

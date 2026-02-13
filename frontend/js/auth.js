@@ -24,7 +24,7 @@ async function requireAuth() {
     return true;
 }
 
-/**
+/*
  * Initialize authentication state on page load
  * For protected pages (index.html)
  */

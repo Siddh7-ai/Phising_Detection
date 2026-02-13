@@ -1,4 +1,4 @@
-"""
+""""
 Database operations for user authentication
 """
 import sqlite3

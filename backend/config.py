@@ -1,4 +1,4 @@
-"""
+""""
 Configuration management for PhishGuard AI
 """
 import os

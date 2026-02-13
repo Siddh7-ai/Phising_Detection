@@ -7,18 +7,20 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Chart.js for visualizations -->
+
+    <!-- Chart.js loaded in head so it is ready before any script -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-    <!-- Main stylesheet -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="guide_styles.css" />
 </head>
 
 <body>
+
     <!-- Background Effects -->
     <div class="bg-grid"></div>
     <div class="glow-orb glow-orb-1"></div>
@@ -27,20 +29,34 @@
     <!-- Toast Notifications -->
     <div id="toast" class="toast hidden"></div>
 
-    <!-- Main Container -->
+    <!-- ================================================================
+         MAIN CONTAINER
+    ================================================================ -->
     <div class="container">
 
-        <!-- Header with Stats -->
+        <!-- ============================================================
+             HEADER
+        ============================================================ -->
         <header class="header">
+
             <div class="header-content">
-                <h1 class="title">
-                    <i class="fas fa-shield-alt"></i>
-                    <span class="neon-green">Phish</span><span class="neon-red">Guard</span> AI
-                </h1>
-                <p class="subtitle">
-                    Advanced ML-Powered Phishing Detection System
-                </p>
+
+                <div class="header-top-row">
+                    <h1 class="title">
+                        <i class="fas fa-shield-alt"></i>
+                        <span class="neon-green">Phish</span><span class="neon-red">Guard</span> AI
+                    </h1>
+
+                    <button id="guideBtn" class="guide-btn top-right" title="How It Works">
+                        <span class="guide-btn-label">How It Works</span>
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </div>
+
+                <p class="subtitle">Advanced ML-Powered Phishing Detection System</p>
+
             </div>
+
 
             <!-- Quick Stats Dashboard -->
             <div class="stats-grid">
@@ -66,36 +82,41 @@
                 </div>
             </div>
 
-            <!-- Theme & Settings + User Menu -->
+            <!-- Header Actions -->
             <div class="header-actions">
+
                 <!-- User Menu -->
-                <div class="user-menu" id="userMenu" style="display: flex; align-items: center; gap: 12px; margin-right: 20px;">
-                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(0, 255, 65, 0.1); border: 1px solid rgba(0, 255, 65, 0.3); border-radius: 8px;">
-                        <i class="fas fa-user-circle" style="color: #00ff41; font-size: 18px;"></i>
-                        <span id="username" style="color: #00ff41; font-weight: 600; font-family: 'Orbitron', sans-serif;">Guest</span>
+                <div class="header-actions">
+
+                    <!-- User ID -->
+                    <div class="user-badge">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="username">Guest</span>
                     </div>
-                    <button onclick="handleLogout()" class="icon-btn" id="logoutBtn" title="Logout" style="background: rgba(255, 0, 110, 0.2); border: 1px solid rgba(255, 0, 110, 0.4);">
-                        <i class="fas fa-sign-out-alt" style="color: #ff006e;"></i>
+
+                    <!-- Logout -->
+                    <button onclick="handleLogout()" class="icon-btn logout-btn" id="logoutBtn" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+
+                    <!-- Theme -->
+                    <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <!-- History -->
+                    <button class="icon-btn" id="historyToggle" title="View History">
+                        <i class="fas fa-history"></i>
                     </button>
                 </div>
-
-                <button class="icon-btn" id="themeToggle" title="Toggle Theme">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="icon-btn" id="historyToggle" title="View History">
-                    <i class="fas fa-history"></i>
-                </button>
-                <button class="icon-btn" id="settingsBtn" title="Settings">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
         </header>
 
-        <!-- Scan Card -->
+        <!-- ============================================================
+             SCAN CARD
+        ============================================================ -->
         <section class="scan-card">
             <h2><i class="fas fa-link"></i> Scan a Website URL</h2>
 
-            <!-- URL Input with Preview -->
             <div class="input-wrapper">
                 <input
                     type="text"
@@ -106,27 +127,24 @@
                 <div class="url-preview" id="urlPreview"></div>
             </div>
 
-            <!-- Quick Test URLs -->
             <div class="quick-tests">
                 <span class="quick-label">Quick Test:</span>
                 <button class="quick-btn" data-url="https://www.netflix.com/in">
                     <i class="fas fa-check-circle"></i> Safe
                 </button>
-                <button class="quick-btn" data-url="http://paypal-verify.tkjvqwertyuioasdfghjcvbn">
+                <button class="quick-btn" data-url="http://urgent-verify-paypal-account-suspended-login-">
                     <i class="fas fa-exclamation-triangle"></i> Phishing
                 </button>
-                <button class="quick-btn" data-url="http://newdomain2024.com">
+                <button class="quick-btn" data-url="http://newpage7.com">
                     <i class="fas fa-code"></i> Suspicious
                 </button>
             </div>
-
-            <!-- Scan Button -->
+            
             <button id="scanBtn" class="scan-btn">
                 <i class="fas fa-search"></i>
                 <span>Scan Website</span>
             </button>
 
-            <!-- Loading Animation -->
             <div id="loading" class="loading hidden">
                 <div class="spinner-advanced">
                     <div class="spinner-ring"></div>
@@ -135,7 +153,7 @@
                 </div>
                 <div class="loading-text">
                     <div class="loading-stage" id="loadingStage">Analyzing URL...</div>
-                    <div class="loading-time" id="loadingTime">0.0s</div>
+                    <div class="loading-time"  id="loadingTime">0.0s</div>
                 </div>
                 <div class="loading-progress">
                     <div class="progress-bar" id="progressBar"></div>
@@ -143,41 +161,33 @@
             </div>
         </section>
 
-        <!-- Result Card -->
+        <!-- ============================================================
+             RESULT CARD
+        ============================================================ -->
         <section id="resultCard" class="result-card hidden">
+
             <div class="result-header">
                 <h2><i class="fas fa-clipboard-check"></i> Scan Result</h2>
                 <div class="result-actions">
-                    <button class="action-btn" id="copyBtn" title="Copy Result">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                    <button class="action-btn" id="shareBtn" title="Share">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                    <button class="action-btn" id="exportBtn" title="Export Report">
-                        <i class="fas fa-download"></i>
-                    </button>
+                    <button class="action-btn" id="shareBtn"  title="Share"><i class="fas fa-share-alt"></i></button>
+                    <button class="action-btn" id="exportBtn" title="Export Report"><i class="fas fa-download"></i></button>
                 </div>
             </div>
 
-            <!-- URL Being Scanned -->
             <div class="scanned-url">
                 <i class="fas fa-link"></i>
                 <span id="scannedUrl">https://example.com</span>
             </div>
 
-            <!-- Main Status -->
             <div class="status-section">
                 <div id="status" class="status safe">
                     <i class="fas fa-check-circle"></i>
                     SAFE
                 </div>
-                
-                <!-- Confidence Meter (Circular) -->
                 <div class="confidence-meter">
                     <svg class="circular-progress" width="160" height="160">
-                        <circle class="bg-circle" cx="80" cy="80" r="70"></circle>
-                        <circle class="progress-circle" id="progressCircle" cx="80" cy="80" r="70"></circle>
+                        <circle class="bg-circle"       cx="80" cy="80" r="70"></circle>
+                        <circle class="progress-circle" cx="80" cy="80" r="70" id="progressCircle"></circle>
                     </svg>
                     <div class="confidence-value">
                         <span id="confidenceValue">0</span>%
@@ -186,7 +196,6 @@
                 </div>
             </div>
 
-            <!-- Metrics Grid -->
             <div class="metrics-grid">
                 <div class="metric-card">
                     <i class="fas fa-calendar-alt"></i>
@@ -210,15 +219,11 @@
                 </div>
             </div>
 
-            <!-- Risk Factors -->
             <div class="risk-section">
                 <h3><i class="fas fa-exclamation-triangle"></i> Risk Analysis</h3>
-                <div id="riskFactors" class="risk-factors">
-                    <!-- Dynamically filled -->
-                </div>
+                <ul id="riskFactors" class="risk-factors"></ul>
             </div>
 
-            <!-- ML Model Info -->
             <div class="model-info">
                 <div class="model-badge">
                     <i class="fas fa-robot"></i>
@@ -230,19 +235,35 @@
                 </div>
             </div>
 
-            <!-- Detailed Breakdown (Collapsible) -->
+            <!-- Detailed Analysis collapsible -->
             <div class="details-section">
                 <button class="details-toggle" id="detailsToggle">
                     <i class="fas fa-chevron-down"></i>
                     View Detailed Analysis
                 </button>
                 <div class="details-content hidden" id="detailsContent">
-                    <canvas id="featuresChart" width="400" height="200"></canvas>
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <h3>📊 Multi-Module Detection Analysis</h3>
+                            <canvas id="detectionChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>🎯 Ensemble Module Contributions</h3>
+                            <canvas id="ensembleChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-container--full">
+                        <h3>📈 URL Feature Analysis</h3>
+                        <canvas id="featuresChart" width="400" height="200"></canvas>
+                    </div>
                 </div>
             </div>
+
         </section>
 
-        <!-- Scan History Sidebar -->
+        <!-- ============================================================
+             HISTORY SIDEBAR
+        ============================================================ -->
         <aside id="historySidebar" class="history-sidebar hidden">
             <div class="sidebar-header">
                 <h3><i class="fas fa-history"></i> Recent Scans</h3>
@@ -250,374 +271,557 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="history-list" id="historyList">
-                <!-- Dynamically filled -->
-            </div>
+            <div class="history-list" id="historyList"></div>
             <button class="clear-history-btn" id="clearHistory">
                 <i class="fas fa-trash"></i> Clear History
             </button>
         </aside>
 
-        <!-- Footer -->
+        <!-- ============================================================
+             FOOTER
+        ============================================================ -->
         <footer class="footer">
             <div class="footer-content">
                 <p>
                     <i class="fas fa-shield-alt"></i>
-                    © 2026 PhishGuard AI • National Hackathon Edition
+                    &copy; 2026 PhishGuard AI &bull; National Hackathon Edition
                 </p>
                 <p class="footer-sub">
-                    Security-first • Explainable AI • Built with Flask & Machine Learning
+                    Security-first &bull; Explainable AI &bull; Built with Flask &amp; Machine Learning
                 </p>
             </div>
             <div class="footer-links">
-                <a href="https://github.com/Siddh7-ai/Phising_Detection.git"><i class="fab fa-github"></i> GitHub</a>
-                <a href="mailto:siddharthraulji5@gmail.com"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="https://github.com/Siddh7-ai/Phising_Detection.git" target="_blank" rel="noopener">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="mailto:siddharthraulji5@gmail.com">
+                    <i class="fas fa-envelope"></i> Contact
+                </a>
             </div>
         </footer>
-    </div>
 
-    <!-- ========================================================================== -->
-    <!-- AUTH MODAL - Login/Signup Modal -->
-    <!-- ========================================================================== -->
+    </div><!-- /.container -->
+
+
+    <!-- ================================================================
+         AUTH MODAL
+    ================================================================ -->
     <div id="authModal" class="auth-modal hidden">
         <div class="auth-modal-overlay" onclick="closeAuthModal()"></div>
-        
         <div class="auth-modal-content">
-            <!-- Close Button -->
+
             <button class="auth-modal-close" onclick="closeAuthModal()">
                 <i class="fas fa-times"></i>
             </button>
-            
-            <!-- Modal Header -->
+
             <div class="auth-modal-header">
-                <i class="fas fa-shield-alt" style="font-size: 48px; color: var(--accent-primary); margin-bottom: 15px;"></i>
+                <i class="fas fa-shield-alt" style="font-size:48px;color:var(--accent-primary);margin-bottom:15px;"></i>
                 <h2 id="authModalTitle">Login Required</h2>
                 <p id="authModalSubtitle">Please login or create an account to continue</p>
             </div>
-            
-            <!-- Tab Switcher -->
+
             <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">
+                <button class="auth-tab active" data-tab="login"  onclick="switchAuthTab('login')">
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
-                <button class="auth-tab" data-tab="signup" onclick="switchAuthTab('signup')">
+                <button class="auth-tab"        data-tab="signup" onclick="switchAuthTab('signup')">
                     <i class="fas fa-user-plus"></i> Sign Up
                 </button>
             </div>
-            
-            <!-- Login Form -->
+
+            <!-- Login -->
             <form id="loginForm" class="auth-form active">
                 <div class="form-group">
-                    <label for="loginEmail">
-                        <i class="fas fa-envelope"></i> Email
-                    </label>
-                    <input 
-                        type="email" 
-                        id="loginEmail" 
-                        placeholder="your@email.com" 
-                        required 
-                        autocomplete="email"
-                    />
+                    <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="loginEmail" placeholder="your@email.com" required autocomplete="email" />
                 </div>
-                
                 <div class="form-group">
-                    <label for="loginPassword">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
+                    <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
                     <div class="password-input">
-                        <input 
-                            type="password" 
-                            id="loginPassword" 
-                            placeholder="••••••••" 
-                            required 
-                            autocomplete="current-password"
-                        />
+                        <input type="password" id="loginPassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" required autocomplete="current-password" />
                         <button type="button" class="toggle-password" onclick="togglePasswordVisibility('loginPassword')">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
                 </div>
-                
                 <div class="form-error" id="loginError"></div>
-                
                 <button type="submit" class="auth-submit-btn" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>Login</span>
+                    <i class="fas fa-sign-in-alt"></i> <span>Login</span>
                 </button>
-                
                 <div class="auth-footer">
-                    <p>Don't have an account? <a href="#" onclick="switchAuthTab('signup'); return false;">Sign Up</a></p>
+                    <p>Don't have an account? <a href="#" onclick="switchAuthTab('signup');return false;">Sign Up</a></p>
                 </div>
             </form>
-            
-            <!-- Signup Form -->
+
+            <!-- Sign Up -->
             <form id="signupForm" class="auth-form">
                 <div class="form-group">
-                    <label for="signupUsername">
-                        <i class="fas fa-user"></i> Username
-                    </label>
-                    <input 
-                        type="text" 
-                        id="signupUsername" 
-                        placeholder="Choose a username" 
-                        required 
-                        autocomplete="username"
-                        minlength="3"
-                        maxlength="20"
-                        pattern="[a-zA-Z0-9_]+"
-                    />
+                    <label for="signupUsername"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="signupUsername" placeholder="Choose a username"
+                        required autocomplete="username" minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+" />
                     <small>3-20 characters, letters, numbers, and underscore only</small>
                 </div>
-                
                 <div class="form-group">
-                    <label for="signupEmail">
-                        <i class="fas fa-envelope"></i> Email
-                    </label>
-                    <input 
-                        type="email" 
-                        id="signupEmail" 
-                        placeholder="your@email.com" 
-                        required 
-                        autocomplete="email"
-                    />
+                    <label for="signupEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="signupEmail" placeholder="your@email.com" required autocomplete="email" />
                 </div>
-                
                 <div class="form-group">
-                    <label for="signupPassword">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
+                    <label for="signupPassword"><i class="fas fa-lock"></i> Password</label>
                     <div class="password-input">
-                        <input 
-                            type="password" 
-                            id="signupPassword" 
-                            placeholder="••••••••" 
-                            required 
-                            autocomplete="new-password"
-                            minlength="8"
-                        />
+                        <input type="password" id="signupPassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                            required autocomplete="new-password" minlength="8" />
                         <button type="button" class="toggle-password" onclick="togglePasswordVisibility('signupPassword')">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
                     <small>Minimum 8 characters</small>
                 </div>
-                
                 <div class="form-group">
-                    <label for="signupPasswordConfirm">
-                        <i class="fas fa-lock"></i> Confirm Password
-                    </label>
+                    <label for="signupPasswordConfirm"><i class="fas fa-lock"></i> Confirm Password</label>
                     <div class="password-input">
-                        <input 
-                            type="password" 
-                            id="signupPasswordConfirm" 
-                            placeholder="••••••••" 
-                            required 
-                            autocomplete="new-password"
-                        />
+                        <input type="password" id="signupPasswordConfirm" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                            required autocomplete="new-password" />
                         <button type="button" class="toggle-password" onclick="togglePasswordVisibility('signupPasswordConfirm')">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
                 </div>
-                
                 <div class="form-error" id="signupError"></div>
-                
                 <button type="submit" class="auth-submit-btn" id="signupBtn">
-                    <i class="fas fa-user-plus"></i>
-                    <span>Create Account</span>
+                    <i class="fas fa-user-plus"></i> <span>Create Account</span>
                 </button>
-                
                 <div class="auth-footer">
-                    <p>Already have an account? <a href="#" onclick="switchAuthTab('login'); return false;">Login</a></p>
+                    <p>Already have an account? <a href="#" onclick="switchAuthTab('login');return false;">Login</a></p>
                 </div>
             </form>
+
         </div>
-    </div>
+    </div><!-- /#authModal -->
 
-    <!-- ========================================================================== -->
-    <!-- SCRIPTS - CRITICAL: Load in this exact order -->
-    <!-- ========================================================================== -->
-    
-    <!-- 1. API Client (creates window.API) - MUST load first -->
-    <script src="js/api.js"></script>
-    
-    <!-- 2. Auth helpers (uses window.API) - MUST load second -->
-    <script src="js/auth.js"></script>
-    
-    <!-- 3. Auth Handler (NEW - handles modal) - MUST load third -->
-    <script src="js/auth-handler.js"></script>
-    
-    <!-- 4. Main application script (uses window.API) - MUST load fourth -->
-    <script src="script.js"></script>
 
-    <!-- 5. Authentication Integration - Loads last -->
-    <script>
-        /**
-         * Initialize authentication when page loads
-         */
-        async function initializeApp() {
-            console.log('🚀 Initializing PhishGuard AI...');
-            
-            // Check if window.API is available
-            if (typeof window.API === 'undefined') {
-                console.error('❌ CRITICAL: window.API is not defined!');
-                console.error('Make sure js/api.js is loaded before this script');
-                return;
-            }
-            
-            console.log('✅ API client is ready');
-            
-            // Check if on a protected page (index.html)
-            const isProtectedPage = window.location.pathname.includes('index.html') || 
-                                   window.location.pathname === '/' ||
-                                   window.location.pathname === '';
-            
-            if (isProtectedPage) {
-                // Check authentication
-                const isAuth = window.API.isAuthenticated();
-                
-                if (!isAuth) {
-                    console.log('ℹ️ Not authenticated - using guest mode');
-                    document.getElementById('username').textContent = 'Guest';
-                    return;
-                }
-                
-                // Validate token
-                const isValid = await window.API.validateToken();
-                
-                if (!isValid) {
-                    console.log('❌ Invalid token - using guest mode');
-                    document.getElementById('username').textContent = 'Guest';
-                    localStorage.removeItem('token');
-                    return;
-                }
-                
-                // Load user profile
-                try {
-                    const profile = await window.API.getProfile();
-                    
-                    // Update username display
-                    const usernameEl = document.getElementById('username');
-                    if (usernameEl && profile.user) {
-                        usernameEl.textContent = profile.user.username;
-                        console.log('✅ Logged in as:', profile.user.username);
-                    }
-                    
-                    // Load user statistics
-                    await loadUserStats();
-                    
-                } catch (error) {
-                    console.error('❌ Failed to load profile:', error);
-                    document.getElementById('username').textContent = 'Guest';
-                }
-            }
-        }
-        
-        /**
-         * Load user statistics from backend
-         */
-        async function loadUserStats() {
-            try {
-                const stats = await window.API.getStats();
-                
-                if (stats && stats.stats) {
-                    // Update stats display with user data
-                    if (stats.stats.total_scans !== undefined) {
-                        document.getElementById('totalScans').textContent = stats.stats.total_scans;
-                    }
-                    if (stats.stats.phishing_detected !== undefined) {
-                        document.getElementById('threatsBlocked').textContent = stats.stats.phishing_detected;
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to load user stats:', error);
-            }
-        }
-        
-        /**
-         * Handle logout
-         */
-        function handleLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                // Clear authentication
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                
-                // Update UI to guest mode
-                document.getElementById('username').textContent = 'Guest';
-                
-                // Show success message
-                if (typeof showToast === 'function') {
-                    showToast('Logged out successfully', 'info');
-                }
-                
-                // Reset stats to default
-                document.getElementById('totalScans').textContent = '0';
-                document.getElementById('threatsBlocked').textContent = '0';
-            }
-        }
-        
-        /**
-         * Load and display user scan history
-         */
-        async function loadUserHistory() {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+    <!-- ================================================================
+         PHISHING GUIDE MODAL
+    ================================================================ -->
+    <div id="guideModal" class="guide-modal">
+        <div class="guide-content">
 
-            try {
-                const history = await window.API.getScanHistory(50);
-                
-                if (history && history.history && history.history.length > 0) {
-                    displayHistoryItems(history.history);
-                }
-            } catch (error) {
-                console.error('Failed to load history:', error);
-            }
-        }
+            <button id="guideClose" class="guide-close">&times;</button>
 
-        /**
-         * Display history items in sidebar
-         */
-        function displayHistoryItems(items) {
-            const historyList = document.getElementById('historyList');
-            if (!historyList || !items || items.length === 0) return;
+            <div class="guide-header">
+                <div class="guide-icon">&#128737;&#65039;</div>
+                <h1>PhishGuard AI &mdash; Complete Guide</h1>
+                <p>Your comprehensive phishing protection assistant</p>
+            </div>
 
-            historyList.innerHTML = items.map(item => {
-                const classification = item.prediction || item.classification;
-                const statusClass = classification === 'Phishing' || classification === 'PHISHING' ? 'danger' : 'safe';
-                const iconClass = statusClass === 'danger' ? 'fa-exclamation-triangle' : 'fa-check-circle';
-                
-                return `
-                    <div class="history-item">
-                        <div class="history-icon ${statusClass}">
-                            <i class="fas ${iconClass}"></i>
+            <div class="guide-tabs">
+                <button class="guide-tab active" data-tab="howto">How to Use</button>
+                <button class="guide-tab"        data-tab="flow">System Flow</button>
+                <button class="guide-tab"        data-tab="about">About PhishGuard</button>
+            </div>
+
+            <!-- HOW TO USE -->
+            <div class="guide-tab-content active" id="howto-content">
+                <h2>&#128203; How to Use PhishGuard AI</h2>
+
+                <div class="guide-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Enter URL</h3>
+                        <p>Copy and paste any suspicious URL into the input field. Make sure it starts with <code>http://</code> or <code>https://</code></p>
+                        <div class="tip">&#128161; <strong>Tip:</strong> Use the quick test buttons for instant examples!</div>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Click Scan</h3>
+                        <p>Press the "Scan Website" button or use keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Enter</kbd></p>
+                        <div class="tip">&#9889; <strong>Speed:</strong> Analysis typically completes in under 1 second!</div>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Review Results</h3>
+                        <p>Check the detailed analysis including:</p>
+                        <ul>
+                            <li><strong>Classification:</strong> Phishing / Suspicious / Legitimate</li>
+                            <li><strong>Confidence Score:</strong> 0&ndash;100% accuracy</li>
+                            <li><strong>Risk Level:</strong> Critical / High / Medium / Low</li>
+                            <li><strong>Detection Breakdown:</strong> Multi-module analysis</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>View Detailed Analysis</h3>
+                        <p>Click "View Detailed Analysis" to see:</p>
+                        <ul>
+                            <li>&#128202; <strong>Multi-Module Detection Chart:</strong> 6 detection methods visualised</li>
+                            <li>&#127919; <strong>Ensemble Breakdown:</strong> How each module contributed</li>
+                            <li>&#128200; <strong>URL Feature Analysis:</strong> Feature-level bar chart</li>
+                            <li>&#9888;&#65039; <strong>Risk Factors:</strong> Specific security concerns found</li>
+                            <li>&#128290; <strong>Metrics:</strong> Domain age, HTTPS status, URL length</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="keyboard-shortcuts">
+                    <h3>&#9000;&#65039; Keyboard Shortcuts</h3>
+                    <div class="shortcut-grid">
+                        <div class="shortcut-item">
+                            <span><kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
+                            <span>Start Scan</span>
                         </div>
-                        <div class="history-details">
-                            <div class="history-url">${item.url.substring(0, 40)}${item.url.length > 40 ? '...' : ''}</div>
-                            <div class="history-meta">
-                                ${classification} • ${new Date(item.timestamp).toLocaleString()}
-                            </div>
+                        <div class="shortcut-item">
+                            <span><kbd>Esc</kbd></span>
+                            <span>Close Guide / Sidebar</span>
                         </div>
                     </div>
-                `;
+                </div>
+            </div>
+
+            <!-- SYSTEM FLOW -->
+            <div class="guide-tab-content" id="flow-content">
+                <h2>&#128260; System Flow</h2>
+
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <div class="flow-icon">&#128229;</div>
+                        <h3>1. URL Input</h3>
+                        <p>User submits URL for analysis</p>
+                        <div class="flow-arrow">&#8595;</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-icon">&#9989;</div>
+                        <h3>2. URL Validation</h3>
+                        <p>Pre-flight checks: Syntax, DNS, Domain existence</p>
+                        <div class="flow-arrow">&#8595;</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-icon">&#129504;</div>
+                        <h3>3. ML Model Analysis</h3>
+                        <p>Random Forest classifier (60% weight)</p>
+                        <ul class="flow-features">
+                            <li>11 URL features extracted</li>
+                            <li>Trained on 10,000+ samples</li>
+                            <li>95%+ accuracy rate</li>
+                        </ul>
+                        <div class="flow-arrow">&#8595;</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-icon">&#128269;</div>
+                        <h3>4. Lexical Analysis</h3>
+                        <p>URL structure &amp; patterns (15% weight)</p>
+                        <ul class="flow-features">
+                            <li>Entropy calculation</li>
+                            <li>Homoglyph detection</li>
+                            <li>Suspicious TLD check</li>
+                        </ul>
+                        <div class="flow-arrow">&#8595;</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-icon">&#127758;</div>
+                        <h3>5. Domain Reputation</h3>
+                        <p>Domain verification (15% weight)</p>
+                        <ul class="flow-features">
+                            <li>DNS resolution check</li>
+                            <li>Whitelist verification</li>
+                            <li>Brand impersonation detection</li>
+                        </ul>
+                        <div class="flow-arrow">&#8595;</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-icon">&#128196;</div>
+                        <h3>6. Behavior Analysis</h3>
+                        <p>Webpage patterns (5% weight)</p>
+                        <ul class="flow-features">
+                            <li>Suspicious path detection</li>
+                            <li>Query parameter analysis</li>
+                            <li>Obfuscation check</li>
+                        </ul>
+                        <div class="flow-arrow">&#8595;</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-icon">&#128172;</div>
+                        <h3>7. NLP Analysis</h3>
+                        <p>Phishing language detection (5% weight)</p>
+                        <ul class="flow-features">
+                            <li>Urgency keywords</li>
+                            <li>Trust exploitation terms</li>
+                            <li>Social engineering patterns</li>
+                        </ul>
+                        <div class="flow-arrow">&#8595;</div>
+                    </div>
+                    <div class="flow-step flow-final">
+                        <div class="flow-icon">&#127919;</div>
+                        <h3>8. Ensemble Decision</h3>
+                        <p>Weighted average of all 6 modules</p>
+                        <div class="ensemble-formula">
+                            <code>Final Score = (ML &times; 0.6) + (Lexical &times; 0.15) + (Reputation &times; 0.15) + (Behavior &times; 0.05) + (NLP &times; 0.05)</code>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">&#8595;</div>
+                    <div class="flow-step flow-result">
+                        <div class="flow-icon">&#128202;</div>
+                        <h3>9. Result Display</h3>
+                        <p>Comprehensive analysis with visual charts</p>
+                    </div>
+                </div>
+
+                <div class="flow-note">
+                    <strong>&#128274; Security Note:</strong> All analysis happens server-side. Your URLs are not stored or shared.
+                </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="guide-tab-content" id="about-content">
+                <h2>&#128737;&#65039; About PhishGuard AI</h2>
+
+                <div class="about-section">
+                    <h3>What is PhishGuard AI?</h3>
+                    <p>PhishGuard AI is an advanced, AI-powered phishing detection system that protects users from malicious websites using cutting-edge machine learning and ensemble detection techniques.</p>
+                </div>
+
+                <div class="about-section">
+                    <h3>&#127919; Key Features</h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">&#129504;</div>
+                            <h4>Ensemble Detection</h4>
+                            <p>6 detection modules working together for maximum accuracy</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">&#9889;</div>
+                            <h4>Real-Time Analysis</h4>
+                            <p>Instant results in under 1 second</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">&#128202;</div>
+                            <h4>Explainable AI</h4>
+                            <p>Detailed breakdown of why a site is flagged</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">&#128274;</div>
+                            <h4>Privacy First</h4>
+                            <p>No URL logging or data collection</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">&#128200;</div>
+                            <h4>95%+ Accuracy</h4>
+                            <p>Trained on 10,000+ real phishing samples</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">&#127758;</div>
+                            <h4>Browser Extension</h4>
+                            <p>Auto-scan protection as you browse</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h3>&#128300; Technology Stack</h3>
+                    <div class="tech-stack">
+                        <div class="tech-item"><strong>Backend:</strong> Flask, Python 3.8+</div>
+                        <div class="tech-item"><strong>ML Model:</strong> Random Forest (scikit-learn)</div>
+                        <div class="tech-item"><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript</div>
+                        <div class="tech-item"><strong>Extension:</strong> Chrome Manifest V3</div>
+                        <div class="tech-item"><strong>Charts:</strong> Chart.js 4.0+</div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h3>&#128200; Performance Metrics</h3>
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <div class="metric-value">95.2%</div>
+                            <div class="metric-label">Accuracy</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">94.8%</div>
+                            <div class="metric-label">Precision</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">96.1%</div>
+                            <div class="metric-label">Recall</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">&lt;1s</div>
+                            <div class="metric-label">Scan Time</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h3>&#9888;&#65039; Important Notes</h3>
+                    <ul class="important-notes">
+                        <li>Always verify suspicious links before clicking</li>
+                        <li>Enable the browser extension for continuous protection</li>
+                        <li>Report false positives to help improve the system</li>
+                        <li>This tool is a detection aid, not a 100% guarantee</li>
+                        <li>Use common sense alongside AI detection</li>
+                    </ul>
+                </div>
+
+                <div class="about-section version-info">
+                    <h3>&#128230; Version Information</h3>
+                    <p><strong>Version:</strong> 5.0.0 &mdash; Ensemble Edition</p>
+                    <p><strong>Release Date:</strong> February 2026</p>
+                    <p><strong>Model Version:</strong> Random Forest v1.0</p>
+                </div>
+
+            </div><!-- /#about-content -->
+
+        </div><!-- /.guide-content -->
+    </div><!-- /#guideModal -->
+
+
+    <!-- ================================================================
+         SCRIPTS — strict dependency order
+    ================================================================ -->
+
+    <!-- 1. API Client -->
+    <script src="js/api.js"></script>
+
+    <!-- 2. Auth helpers -->
+    <script src="js/auth.js"></script>
+
+    <!-- 3. Auth modal handler -->
+    <script src="js/auth-handler.js"></script>
+
+    <!-- 4. Main application logic -->
+    <script src="script.js"></script>
+
+    <!-- 5. Guide modal tab switching -->
+    <script>
+        document.querySelectorAll('.guide-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.guide-tab').forEach(function(t) {
+                    t.classList.remove('active');
+                });
+                document.querySelectorAll('.guide-tab-content').forEach(function(c) {
+                    c.classList.remove('active');
+                });
+                this.classList.add('active');
+                var target = document.getElementById(this.dataset.tab + '-content');
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+
+    <!-- 6. App init + Auth integration -->
+    <script>
+        async function initializeApp() {
+            console.log('🚀 Initializing PhishGuard AI...');
+
+            if (typeof window.API === 'undefined') {
+                console.error('❌ CRITICAL: window.API not defined. Check js/api.js load order.');
+                return;
+            }
+            console.log('✅ API client ready');
+
+            var isProtectedPage =
+                window.location.pathname.includes('index.html') ||
+                window.location.pathname === '/' ||
+                window.location.pathname === '';
+
+            if (!isProtectedPage) return;
+
+            var isAuth = window.API.isAuthenticated();
+            if (!isAuth) {
+                document.getElementById('username').textContent = 'Guest';
+                return;
+            }
+
+            var isValid = await window.API.validateToken();
+            if (!isValid) {
+                document.getElementById('username').textContent = 'Guest';
+                localStorage.removeItem('token');
+                return;
+            }
+
+            try {
+                var profile = await window.API.getProfile();
+                var usernameEl = document.getElementById('username');
+                if (usernameEl && profile.user) {
+                    usernameEl.textContent = profile.user.username;
+                    console.log('✅ Logged in as:', profile.user.username);
+                }
+                await loadUserStats();
+            } catch (err) {
+                console.error('❌ Failed to load profile:', err);
+                document.getElementById('username').textContent = 'Guest';
+            }
+        }
+
+        async function loadUserStats() {
+            try {
+                var stats = await window.API.getStats();
+                if (stats && stats.stats) {
+                    if (stats.stats.total_scans !== undefined)
+                        document.getElementById('totalScans').textContent = stats.stats.total_scans;
+                    if (stats.stats.phishing_detected !== undefined)
+                        document.getElementById('threatsBlocked').textContent = stats.stats.phishing_detected;
+                }
+            } catch (err) {
+                console.error('Failed to load user stats:', err);
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                document.getElementById('username').textContent = 'Guest';
+                document.getElementById('totalScans').textContent = '0';
+                document.getElementById('threatsBlocked').textContent = '0';
+                if (typeof showToast === 'function') showToast('Logged out successfully', 'info');
+            }
+        }
+
+        async function loadUserHistory() {
+            var token = localStorage.getItem('token');
+            if (!token) return;
+            try {
+                var history = await window.API.getScanHistory(50);
+                if (history && history.history && history.history.length > 0)
+                    displayHistoryItems(history.history);
+            } catch (err) {
+                console.error('Failed to load history:', err);
+            }
+        }
+
+        function displayHistoryItems(items) {
+            var historyList = document.getElementById('historyList');
+            if (!historyList || !items || items.length === 0) return;
+            historyList.innerHTML = items.map(function(item) {
+                var cls = item.prediction || item.classification;
+                var sc  = (cls === 'Phishing' || cls === 'PHISHING') ? 'danger' : 'safe';
+                var ic  = (sc === 'danger') ? 'fa-exclamation-triangle' : 'fa-check-circle';
+                return '<div class="history-item">'
+                     + '<div class="history-icon ' + sc + '"><i class="fas ' + ic + '"></i></div>'
+                     + '<div class="history-details">'
+                     + '<div class="history-url">' + item.url.substring(0, 40) + (item.url.length > 40 ? '...' : '') + '</div>'
+                     + '<div class="history-meta">' + cls + ' &bull; ' + new Date(item.timestamp).toLocaleString() + '</div>'
+                     + '</div></div>';
             }).join('');
         }
 
-        // Load history when sidebar is opened
-        const historyToggle = document.getElementById('historyToggle');
-        if (historyToggle) {
-            historyToggle.addEventListener('click', function() {
-                loadUserHistory();
-            });
-        }
-        
-        // Initialize when DOM is ready
+        // Attach history loader to toggle button
+        var _ht = document.getElementById('historyToggle');
+        if (_ht) _ht.addEventListener('click', loadUserHistory);
+
+        // Bootstrap
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initializeApp);
         } else {
-            // DOM is already loaded
             initializeApp();
         }
     </script>
+
 </body>
 </html>

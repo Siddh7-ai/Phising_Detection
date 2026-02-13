@@ -1,4 +1,4 @@
-"""
+""""
 JWT middleware for authentication
 """
 import jwt

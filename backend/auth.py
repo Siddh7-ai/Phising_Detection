@@ -1,4 +1,4 @@
-"""
+""""
 Authentication routes
 """
 from flask import Blueprint, request, jsonify
