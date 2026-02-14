@@ -6,17 +6,16 @@
     <title>PhishGuard AI • Advanced Website Security Scanner</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Chart.js loaded in head so it is ready before any script -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-    <!-- Stylesheets -->
+    <!-- ✅ Single unified stylesheet (replaces style.css + guide_styles.css) -->
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="guide_styles.css" />
 </head>
 
 <body>
@@ -39,24 +38,31 @@
         ============================================================ -->
         <header class="header">
 
-            <div class="header-content">
+            <!-- TOP ROW: Logo Left, Buttons Right -->
+            <div class="header-top-row">
 
-                <div class="header-top-row">
+                <!-- LEFT: Logo + Subtitle -->
+                <div class="logo-and-subtitle">
                     <h1 class="title">
                         <i class="fas fa-shield-alt"></i>
                         <span class="neon-green">Phish</span><span class="neon-red">Guard</span> AI
                     </h1>
+                    <p class="subtitle">Advanced ML-Powered Phishing Detection System</p>
+                </div>
 
-                    <button id="guideBtn" class="guide-btn top-right" title="How It Works">
-                        <span class="guide-btn-label">How It Works</span>
+                <!-- RIGHT: Both Buttons Side by Side -->
+                <div class="header-right-buttons">
+                    <button id="guideBtn" class="guide-btn" title="How It Works">
                         <i class="fas fa-question-circle"></i>
+                        How It Works
+                    </button>
+                    <button id="downloadExtensionBtn" class="download-extension-btn" title="Download Browser Extension">
+                        <i class="fas fa-download"></i>
+                        Download Extension
                     </button>
                 </div>
 
-                <p class="subtitle">Advanced ML-Powered Phishing Detection System</p>
-
             </div>
-
 
             <!-- Quick Stats Dashboard -->
             <div class="stats-grid">
@@ -82,33 +88,22 @@
                 </div>
             </div>
 
-            <!-- Header Actions -->
+            <!-- Header Actions (User Controls) -->
             <div class="header-actions">
-
-                <!-- User Menu -->
-                <div class="header-actions">
-
-                    <!-- User ID -->
-                    <div class="user-badge">
-                        <i class="fas fa-user-circle"></i>
-                        <span id="username">Guest</span>
-                    </div>
-
-                    <!-- Logout -->
-                    <button onclick="handleLogout()" class="icon-btn logout-btn" id="logoutBtn" title="Logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-
-                    <!-- Theme -->
-                    <button class="icon-btn" id="themeToggle" title="Toggle Theme">
-                        <i class="fas fa-moon"></i>
-                    </button>
-
-                    <!-- History -->
-                    <button class="icon-btn" id="historyToggle" title="View History">
-                        <i class="fas fa-history"></i>
-                    </button>
+                <div class="user-badge clickable" id="userBadge">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="username">Guest</span>
                 </div>
+                <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="icon-btn" id="historyToggle" title="View History">
+                    <i class="fas fa-history"></i>
+                </button>
+                <button onclick="handleLogout()" class="icon-btn logout-btn" id="logoutBtn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
         </header>
 
         <!-- ============================================================
@@ -127,6 +122,7 @@
                 <div class="url-preview" id="urlPreview"></div>
             </div>
 
+            <!-- Quick Tests -->
             <div class="quick-tests">
                 <span class="quick-label">Quick Test:</span>
                 <button class="quick-btn" data-url="https://www.netflix.com/in">
@@ -139,12 +135,13 @@
                     <i class="fas fa-code"></i> Suspicious
                 </button>
             </div>
-            
+
             <button id="scanBtn" class="scan-btn">
                 <i class="fas fa-search"></i>
                 <span>Scan Website</span>
             </button>
 
+            <!-- Loading Animation -->
             <div id="loading" class="loading hidden">
                 <div class="spinner-advanced">
                     <div class="spinner-ring"></div>
@@ -179,6 +176,7 @@
                 <span id="scannedUrl">https://example.com</span>
             </div>
 
+            <!-- Status + Confidence -->
             <div class="status-section">
                 <div id="status" class="status safe">
                     <i class="fas fa-check-circle"></i>
@@ -196,6 +194,7 @@
                 </div>
             </div>
 
+            <!-- Metrics -->
             <div class="metrics-grid">
                 <div class="metric-card">
                     <i class="fas fa-calendar-alt"></i>
@@ -219,11 +218,13 @@
                 </div>
             </div>
 
+            <!-- Risk Factors -->
             <div class="risk-section">
                 <h3><i class="fas fa-exclamation-triangle"></i> Risk Analysis</h3>
                 <ul id="riskFactors" class="risk-factors"></ul>
             </div>
 
+            <!-- Model Info -->
             <div class="model-info">
                 <div class="model-badge">
                     <i class="fas fa-robot"></i>
@@ -235,11 +236,11 @@
                 </div>
             </div>
 
-            <!-- Detailed Analysis collapsible -->
+            <!-- Detailed Analysis (collapsible) -->
             <div class="details-section">
                 <button class="details-toggle" id="detailsToggle">
-                    <i class="fas fa-chevron-down"></i>
-                    View Detailed Analysis
+                    <i class="fas fa-lock"></i>
+                    View Detailed Analysis (Login Required)
                 </button>
                 <div class="details-content hidden" id="detailsContent">
                     <div class="charts-grid">
@@ -252,7 +253,7 @@
                             <canvas id="ensembleChart"></canvas>
                         </div>
                     </div>
-                    <div class="chart-container chart-container--full">
+                    <div class="chart-container">
                         <h3>📈 URL Feature Analysis</h3>
                         <canvas id="featuresChart" width="400" height="200"></canvas>
                     </div>
@@ -266,12 +267,14 @@
         ============================================================ -->
         <aside id="historySidebar" class="history-sidebar hidden">
             <div class="sidebar-header">
-                <h3><i class="fas fa-history"></i> Recent Scans</h3>
+                <h3><i class="fas fa-history"></i> Scan History</h3>
                 <button class="close-btn" id="closeHistory">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="history-list" id="historyList"></div>
+            <div class="history-list" id="historyList">
+                <div class="history-empty">No scan history yet</div>
+            </div>
             <button class="clear-history-btn" id="clearHistory">
                 <i class="fas fa-trash"></i> Clear History
             </button>
@@ -284,10 +287,10 @@
             <div class="footer-content">
                 <p>
                     <i class="fas fa-shield-alt"></i>
-                    &copy; 2026 PhishGuard AI &bull; National Hackathon Edition
+                    <strong>PhishGuard AI</strong> &mdash; Protecting users with ML-powered phishing detection
                 </p>
                 <p class="footer-sub">
-                    Security-first &bull; Explainable AI &bull; Built with Flask &amp; Machine Learning
+                    &copy; 2026 PhishGuard AI &bull; ThinkX Hackathon &bull; Security-first &bull; Explainable AI &bull; Built with Flask &amp; Machine Learning
                 </p>
             </div>
             <div class="footer-links">
@@ -297,6 +300,7 @@
                 <a href="mailto:siddharthraulji5@gmail.com">
                     <i class="fas fa-envelope"></i> Contact
                 </a>
+                <a href="javascript:void(0);" id="footerHelpBtn"><i class="fas fa-question-circle"></i> Help</a>
             </div>
         </footer>
 
@@ -329,7 +333,7 @@
                 </button>
             </div>
 
-            <!-- Login -->
+            <!-- Login Form -->
             <form id="loginForm" class="auth-form active">
                 <div class="form-group">
                     <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
@@ -338,7 +342,7 @@
                 <div class="form-group">
                     <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
                     <div class="password-input">
-                        <input type="password" id="loginPassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" required autocomplete="current-password" />
+                        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password" />
                         <button type="button" class="toggle-password" onclick="togglePasswordVisibility('loginPassword')">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -353,7 +357,7 @@
                 </div>
             </form>
 
-            <!-- Sign Up -->
+            <!-- Sign Up Form -->
             <form id="signupForm" class="auth-form">
                 <div class="form-group">
                     <label for="signupUsername"><i class="fas fa-user"></i> Username</label>
@@ -368,7 +372,7 @@
                 <div class="form-group">
                     <label for="signupPassword"><i class="fas fa-lock"></i> Password</label>
                     <div class="password-input">
-                        <input type="password" id="signupPassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                        <input type="password" id="signupPassword" placeholder="••••••••"
                             required autocomplete="new-password" minlength="8" />
                         <button type="button" class="toggle-password" onclick="togglePasswordVisibility('signupPassword')">
                             <i class="fas fa-eye"></i>
@@ -379,7 +383,7 @@
                 <div class="form-group">
                     <label for="signupPasswordConfirm"><i class="fas fa-lock"></i> Confirm Password</label>
                     <div class="password-input">
-                        <input type="password" id="signupPasswordConfirm" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                        <input type="password" id="signupPasswordConfirm" placeholder="••••••••"
                             required autocomplete="new-password" />
                         <button type="button" class="toggle-password" onclick="togglePasswordVisibility('signupPasswordConfirm')">
                             <i class="fas fa-eye"></i>
@@ -408,7 +412,7 @@
             <button id="guideClose" class="guide-close">&times;</button>
 
             <div class="guide-header">
-                <div class="guide-icon">&#128737;&#65039;</div>
+                <div class="guide-icon">🛡️</div>
                 <h1>PhishGuard AI &mdash; Complete Guide</h1>
                 <p>Your comprehensive phishing protection assistant</p>
             </div>
@@ -421,14 +425,14 @@
 
             <!-- HOW TO USE -->
             <div class="guide-tab-content active" id="howto-content">
-                <h2>&#128203; How to Use PhishGuard AI</h2>
+                <h2>📋 How to Use PhishGuard AI</h2>
 
                 <div class="guide-step">
                     <div class="step-number">1</div>
                     <div class="step-content">
                         <h3>Enter URL</h3>
                         <p>Copy and paste any suspicious URL into the input field. Make sure it starts with <code>http://</code> or <code>https://</code></p>
-                        <div class="tip">&#128161; <strong>Tip:</strong> Use the quick test buttons for instant examples!</div>
+                        <div class="tip">💡 <strong>Tip:</strong> Use the quick test buttons for instant examples!</div>
                     </div>
                 </div>
 
@@ -437,7 +441,7 @@
                     <div class="step-content">
                         <h3>Click Scan</h3>
                         <p>Press the "Scan Website" button or use keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Enter</kbd></p>
-                        <div class="tip">&#9889; <strong>Speed:</strong> Analysis typically completes in under 1 second!</div>
+                        <div class="tip">⚡ <strong>Speed:</strong> Analysis typically completes in under 1 second!</div>
                     </div>
                 </div>
 
@@ -448,10 +452,11 @@
                         <p>Check the detailed analysis including:</p>
                         <ul>
                             <li><strong>Classification:</strong> Phishing / Suspicious / Legitimate</li>
-                            <li><strong>Confidence Score:</strong> 0&ndash;100% accuracy</li>
+                            <li><strong>Confidence Score:</strong> 0–100% accuracy</li>
                             <li><strong>Risk Level:</strong> Critical / High / Medium / Low</li>
                             <li><strong>Detection Breakdown:</strong> Multi-module analysis</li>
                         </ul>
+                        <div class="tip">💡 Check the risk factors section for detailed information</div>
                     </div>
                 </div>
 
@@ -461,25 +466,25 @@
                         <h3>View Detailed Analysis</h3>
                         <p>Click "View Detailed Analysis" to see:</p>
                         <ul>
-                            <li>&#128202; <strong>Multi-Module Detection Chart:</strong> 6 detection methods visualised</li>
-                            <li>&#127919; <strong>Ensemble Breakdown:</strong> How each module contributed</li>
-                            <li>&#128200; <strong>URL Feature Analysis:</strong> Feature-level bar chart</li>
-                            <li>&#9888;&#65039; <strong>Risk Factors:</strong> Specific security concerns found</li>
-                            <li>&#128290; <strong>Metrics:</strong> Domain age, HTTPS status, URL length</li>
+                            <li>📊 <strong>Multi-Module Detection Chart:</strong> 6 detection methods visualised</li>
+                            <li>🎯 <strong>Ensemble Breakdown:</strong> How each module contributed</li>
+                            <li>📈 <strong>URL Feature Analysis:</strong> Feature-level bar chart</li>
+                            <li>⚠️ <strong>Risk Factors:</strong> Specific security concerns found</li>
+                            <li>🔎 <strong>Metrics:</strong> Domain age, HTTPS status, URL length</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="keyboard-shortcuts">
-                    <h3>&#9000;&#65039; Keyboard Shortcuts</h3>
+                    <h3>⌨️ Keyboard Shortcuts</h3>
                     <div class="shortcut-grid">
                         <div class="shortcut-item">
+                            <span>Scan URL</span>
                             <span><kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
-                            <span>Start Scan</span>
                         </div>
                         <div class="shortcut-item">
-                            <span><kbd>Esc</kbd></span>
                             <span>Close Guide / Sidebar</span>
+                            <span><kbd>Esc</kbd></span>
                         </div>
                     </div>
                 </div>
@@ -487,23 +492,23 @@
 
             <!-- SYSTEM FLOW -->
             <div class="guide-tab-content" id="flow-content">
-                <h2>&#128260; System Flow</h2>
+                <h2>🔄 System Flow</h2>
 
                 <div class="flow-diagram">
                     <div class="flow-step">
-                        <div class="flow-icon">&#128229;</div>
+                        <div class="flow-icon">📥</div>
                         <h3>1. URL Input</h3>
                         <p>User submits URL for analysis</p>
-                        <div class="flow-arrow">&#8595;</div>
+                        <div class="flow-arrow">↓</div>
                     </div>
                     <div class="flow-step">
-                        <div class="flow-icon">&#9989;</div>
+                        <div class="flow-icon">✅</div>
                         <h3>2. URL Validation</h3>
                         <p>Pre-flight checks: Syntax, DNS, Domain existence</p>
-                        <div class="flow-arrow">&#8595;</div>
+                        <div class="flow-arrow">↓</div>
                     </div>
                     <div class="flow-step">
-                        <div class="flow-icon">&#129504;</div>
+                        <div class="flow-icon">🧠</div>
                         <h3>3. ML Model Analysis</h3>
                         <p>Random Forest classifier (60% weight)</p>
                         <ul class="flow-features">
@@ -511,10 +516,10 @@
                             <li>Trained on 10,000+ samples</li>
                             <li>95%+ accuracy rate</li>
                         </ul>
-                        <div class="flow-arrow">&#8595;</div>
+                        <div class="flow-arrow">↓</div>
                     </div>
                     <div class="flow-step">
-                        <div class="flow-icon">&#128269;</div>
+                        <div class="flow-icon">🔍</div>
                         <h3>4. Lexical Analysis</h3>
                         <p>URL structure &amp; patterns (15% weight)</p>
                         <ul class="flow-features">
@@ -522,10 +527,10 @@
                             <li>Homoglyph detection</li>
                             <li>Suspicious TLD check</li>
                         </ul>
-                        <div class="flow-arrow">&#8595;</div>
+                        <div class="flow-arrow">↓</div>
                     </div>
                     <div class="flow-step">
-                        <div class="flow-icon">&#127758;</div>
+                        <div class="flow-icon">🌐</div>
                         <h3>5. Domain Reputation</h3>
                         <p>Domain verification (15% weight)</p>
                         <ul class="flow-features">
@@ -533,10 +538,10 @@
                             <li>Whitelist verification</li>
                             <li>Brand impersonation detection</li>
                         </ul>
-                        <div class="flow-arrow">&#8595;</div>
+                        <div class="flow-arrow">↓</div>
                     </div>
                     <div class="flow-step">
-                        <div class="flow-icon">&#128196;</div>
+                        <div class="flow-icon">📄</div>
                         <h3>6. Behavior Analysis</h3>
                         <p>Webpage patterns (5% weight)</p>
                         <ul class="flow-features">
@@ -544,10 +549,10 @@
                             <li>Query parameter analysis</li>
                             <li>Obfuscation check</li>
                         </ul>
-                        <div class="flow-arrow">&#8595;</div>
+                        <div class="flow-arrow">↓</div>
                     </div>
                     <div class="flow-step">
-                        <div class="flow-icon">&#128172;</div>
+                        <div class="flow-icon">💬</div>
                         <h3>7. NLP Analysis</h3>
                         <p>Phishing language detection (5% weight)</p>
                         <ul class="flow-features">
@@ -555,32 +560,41 @@
                             <li>Trust exploitation terms</li>
                             <li>Social engineering patterns</li>
                         </ul>
-                        <div class="flow-arrow">&#8595;</div>
+                        <div class="flow-arrow">↓</div>
                     </div>
                     <div class="flow-step flow-final">
-                        <div class="flow-icon">&#127919;</div>
+                        <div class="flow-icon">🎯</div>
                         <h3>8. Ensemble Decision</h3>
                         <p>Weighted average of all 6 modules</p>
                         <div class="ensemble-formula">
-                            <code>Final Score = (ML &times; 0.6) + (Lexical &times; 0.15) + (Reputation &times; 0.15) + (Behavior &times; 0.05) + (NLP &times; 0.05)</code>
+                            <code>Final Score = (ML × 0.6) + (Lexical × 0.15) + (Reputation × 0.15) + (Behavior × 0.05) + (NLP × 0.05)</code>
+                        </div>
+                        <div class="ensemble-formula" style="margin-top:10px;">
+                            <code>
+                                • Phishing:   ML Score ≥ 75%<br>
+                                • Suspicious: 40% ≤ ML Score &lt; 75%<br>
+                                • Safe:       ML Score &lt; 40%
+                            </code>
                         </div>
                     </div>
-                    <div class="flow-arrow">&#8595;</div>
+                    <div class="flow-arrow">↓</div>
                     <div class="flow-step flow-result">
-                        <div class="flow-icon">&#128202;</div>
+                        <div class="flow-icon">📊</div>
                         <h3>9. Result Display</h3>
                         <p>Comprehensive analysis with visual charts</p>
                     </div>
                 </div>
 
                 <div class="flow-note">
-                    <strong>&#128274; Security Note:</strong> All analysis happens server-side. Your URLs are not stored or shared.
+                    <strong>🔒 Security Note:</strong> All analysis happens server-side. Your URLs are not stored or shared.
+                    <br><br>
+                    <strong>Note:</strong> While we display analysis from multiple modules (Lexical, Reputation, Behavior, NLP) for transparency, the final verdict is driven entirely by the ML model score.
                 </div>
             </div>
 
             <!-- ABOUT -->
             <div class="guide-tab-content" id="about-content">
-                <h2>&#128737;&#65039; About PhishGuard AI</h2>
+                <h2>🛡️ About PhishGuard AI</h2>
 
                 <div class="about-section">
                     <h3>What is PhishGuard AI?</h3>
@@ -588,35 +602,35 @@
                 </div>
 
                 <div class="about-section">
-                    <h3>&#127919; Key Features</h3>
+                    <h3>🎯 Key Features</h3>
                     <div class="features-grid">
                         <div class="feature-card">
-                            <div class="feature-icon">&#129504;</div>
+                            <div class="feature-icon">🧠</div>
                             <h4>Ensemble Detection</h4>
                             <p>6 detection modules working together for maximum accuracy</p>
                         </div>
                         <div class="feature-card">
-                            <div class="feature-icon">&#9889;</div>
+                            <div class="feature-icon">⚡</div>
                             <h4>Real-Time Analysis</h4>
                             <p>Instant results in under 1 second</p>
                         </div>
                         <div class="feature-card">
-                            <div class="feature-icon">&#128202;</div>
+                            <div class="feature-icon">📊</div>
                             <h4>Explainable AI</h4>
                             <p>Detailed breakdown of why a site is flagged</p>
                         </div>
                         <div class="feature-card">
-                            <div class="feature-icon">&#128274;</div>
+                            <div class="feature-icon">🔒</div>
                             <h4>Privacy First</h4>
                             <p>No URL logging or data collection</p>
                         </div>
                         <div class="feature-card">
-                            <div class="feature-icon">&#128200;</div>
+                            <div class="feature-icon">📈</div>
                             <h4>95%+ Accuracy</h4>
                             <p>Trained on 10,000+ real phishing samples</p>
                         </div>
                         <div class="feature-card">
-                            <div class="feature-icon">&#127758;</div>
+                            <div class="feature-icon">🌐</div>
                             <h4>Browser Extension</h4>
                             <p>Auto-scan protection as you browse</p>
                         </div>
@@ -624,18 +638,18 @@
                 </div>
 
                 <div class="about-section">
-                    <h3>&#128300; Technology Stack</h3>
+                    <h3>🔬 Technology Stack</h3>
                     <div class="tech-stack">
                         <div class="tech-item"><strong>Backend:</strong> Flask, Python 3.8+</div>
                         <div class="tech-item"><strong>ML Model:</strong> Random Forest (scikit-learn)</div>
-                        <div class="tech-item"><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript</div>
+                        <div class="tech-item"><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript, Chart.js 4.0+</div>
                         <div class="tech-item"><strong>Extension:</strong> Chrome Manifest V3</div>
-                        <div class="tech-item"><strong>Charts:</strong> Chart.js 4.0+</div>
+                        <div class="tech-item"><strong>Database:</strong> SQLite with bcrypt &amp; JWT</div>
                     </div>
                 </div>
 
                 <div class="about-section">
-                    <h3>&#128200; Performance Metrics</h3>
+                    <h3>📈 Performance Metrics</h3>
                     <div class="metrics-grid">
                         <div class="metric">
                             <div class="metric-value">95.2%</div>
@@ -657,7 +671,7 @@
                 </div>
 
                 <div class="about-section">
-                    <h3>&#9888;&#65039; Important Notes</h3>
+                    <h3>⚠️ Important Notes</h3>
                     <ul class="important-notes">
                         <li>Always verify suspicious links before clicking</li>
                         <li>Enable the browser extension for continuous protection</li>
@@ -668,10 +682,11 @@
                 </div>
 
                 <div class="about-section version-info">
-                    <h3>&#128230; Version Information</h3>
-                    <p><strong>Version:</strong> 5.0.0 &mdash; Ensemble Edition</p>
+                    <h3>📦 Version Information</h3>
+                    <p><strong>Version:</strong> 7.0 &mdash; Unified Edition</p>
                     <p><strong>Release Date:</strong> February 2026</p>
                     <p><strong>Model Version:</strong> Random Forest v1.0</p>
+                    <p><strong>License:</strong> MIT</p>
                 </div>
 
             </div><!-- /#about-content -->
@@ -681,43 +696,31 @@
 
 
     <!-- ================================================================
-         SCRIPTS — strict dependency order
+         SCRIPTS
     ================================================================ -->
-
-    <!-- 1. API Client -->
     <script src="js/api.js"></script>
-
-    <!-- 2. Auth helpers -->
     <script src="js/auth.js"></script>
-
-    <!-- 3. Auth modal handler -->
     <script src="js/auth-handler.js"></script>
-
-    <!-- 4. Main application logic -->
     <script src="script.js"></script>
+    <script src="js/script.js"></script>
 
-    <!-- 5. Guide modal tab switching -->
+    <!-- Guide modal tab switching -->
     <script>
         document.querySelectorAll('.guide-tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
-                document.querySelectorAll('.guide-tab').forEach(function(t) {
-                    t.classList.remove('active');
-                });
-                document.querySelectorAll('.guide-tab-content').forEach(function(c) {
-                    c.classList.remove('active');
-                });
+                document.querySelectorAll('.guide-tab').forEach(function(t) { t.classList.remove('active'); });
+                document.querySelectorAll('.guide-tab-content').forEach(function(c) { c.classList.remove('active'); });
                 this.classList.add('active');
-                var target = document.getElementById(this.dataset.tab + '-content');
-                if (target) target.classList.add('active');
+                var panel = document.getElementById(this.dataset.tab + '-content');
+                if (panel) panel.classList.add('active');
             });
         });
     </script>
 
-    <!-- 6. App init + Auth integration -->
+    <!-- App initialization -->
     <script>
         async function initializeApp() {
             console.log('🚀 Initializing PhishGuard AI...');
-
             if (typeof window.API === 'undefined') {
                 console.error('❌ CRITICAL: window.API not defined. Check js/api.js load order.');
                 return;
@@ -734,6 +737,7 @@
             var isAuth = window.API.isAuthenticated();
             if (!isAuth) {
                 document.getElementById('username').textContent = 'Guest';
+                updateUIForGuestUser();
                 return;
             }
 
@@ -741,6 +745,7 @@
             if (!isValid) {
                 document.getElementById('username').textContent = 'Guest';
                 localStorage.removeItem('token');
+                updateUIForGuestUser();
                 return;
             }
 
@@ -750,13 +755,52 @@
                 if (usernameEl && profile.user) {
                     usernameEl.textContent = profile.user.username;
                     console.log('✅ Logged in as:', profile.user.username);
+                    updateUIForLoggedInUser();
                 }
                 await loadUserStats();
             } catch (err) {
                 console.error('❌ Failed to load profile:', err);
                 document.getElementById('username').textContent = 'Guest';
+                updateUIForGuestUser();
             }
         }
+
+        function updateUIForLoggedInUser() {
+            var logoutBtn = document.getElementById('logoutBtn');
+            var userBadge = document.getElementById('userBadge');
+            if (logoutBtn) logoutBtn.style.display = 'flex';
+            if (userBadge) {
+                userBadge.classList.remove('clickable');
+                userBadge.title = 'Logged in';
+                userBadge.style.cursor = 'default';
+            }
+        }
+
+        function updateUIForGuestUser() {
+            var logoutBtn = document.getElementById('logoutBtn');
+            var userBadge = document.getElementById('userBadge');
+            if (logoutBtn) logoutBtn.style.display = 'none';
+            if (userBadge) {
+                userBadge.classList.add('clickable');
+                userBadge.title = 'Click to login/signup';
+                userBadge.style.cursor = 'pointer';
+            }
+        }
+
+        function handleUserBadgeClick() {
+            var username = document.getElementById('username').textContent;
+            if (username === 'Guest') {
+                if (typeof showAuthModal === 'function')       showAuthModal('login', null);
+                else if (typeof openAuthModal === 'function')  openAuthModal();
+                else {
+                    var authModal = document.getElementById('authModal');
+                    if (authModal) authModal.classList.remove('hidden');
+                }
+            }
+        }
+
+        var userBadge = document.getElementById('userBadge');
+        if (userBadge) userBadge.addEventListener('click', handleUserBadgeClick);
 
         async function loadUserStats() {
             try {
@@ -779,6 +823,7 @@
                 document.getElementById('username').textContent = 'Guest';
                 document.getElementById('totalScans').textContent = '0';
                 document.getElementById('threatsBlocked').textContent = '0';
+                updateUIForGuestUser();
                 if (typeof showToast === 'function') showToast('Logged out successfully', 'info');
             }
         }
@@ -806,20 +851,34 @@
                      + '<div class="history-icon ' + sc + '"><i class="fas ' + ic + '"></i></div>'
                      + '<div class="history-details">'
                      + '<div class="history-url">' + item.url.substring(0, 40) + (item.url.length > 40 ? '...' : '') + '</div>'
-                     + '<div class="history-meta">' + cls + ' &bull; ' + new Date(item.timestamp).toLocaleString() + '</div>'
+                     + '<div class="history-meta">' + cls + ' • ' + new Date(item.timestamp).toLocaleString() + '</div>'
                      + '</div></div>';
             }).join('');
         }
 
-        // Attach history loader to toggle button
         var _ht = document.getElementById('historyToggle');
         if (_ht) _ht.addEventListener('click', loadUserHistory);
 
-        // Bootstrap
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initializeApp);
         } else {
             initializeApp();
+        }
+        // Footer Help Button → Open Guide Modal
+        var footerHelpBtn = document.getElementById('footerHelpBtn');
+        var guideModal = document.getElementById('guideModal');
+
+        if (footerHelpBtn && guideModal) {
+            footerHelpBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                guideModal.classList.add("active");
+            });
+        }
+        var guideClose = document.getElementById('guideClose');
+        if (guideClose && guideModal) {
+            guideClose.addEventListener('click', function () {
+                guideModal.classList.remove("active");
+            });
         }
     </script>
 
