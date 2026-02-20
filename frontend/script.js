@@ -418,7 +418,7 @@ function displayResult(data, scanDuration) {
             View Detailed Analysis
         `;
     }
-    
+
     elements.scannedUrl.textContent = data.url;
 
     // ── ML-only confidence ──────────────────────────────────────────
@@ -985,7 +985,7 @@ function saveToHistory(data, duration) {
         url:            data.url,
         classification: mlScore >= ML_PHISHING_THRESHOLD   ? "Phishing"
                       : mlScore >= ML_SUSPICIOUS_THRESHOLD ? "Suspicious"
-                      : "Legitimate",
+                      : "Safe",
         confidence:     mlScore,
         timestamp:      data.timestamp || new Date().toISOString(),
         duration:       duration || 0
@@ -1035,7 +1035,7 @@ function updateHistoryDisplay() {
             <div class="history-url">${truncateUrl(entry.url, 40)}</div>
             <div class="history-meta">
                 <span>${new Date(entry.timestamp).toLocaleString()}</span>
-                <span>${entry.duration ? entry.duration + "ms" : ""}</span>
+                <span>${entry.duration ? (entry.duration/1000).toFixed(2) + "s" : ""}</span>
             </div>`;
         div.addEventListener("click", () => {
             elements.urlInput.value = entry.url;
