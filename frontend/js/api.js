@@ -141,7 +141,7 @@ class APIClient {
     async scanURL(url) {
         console.log('🔍 Scanning URL:', url);
 
-        const response = await fetch(`${this.baseURL}/api/scan`, {
+        const response = await fetch(`${this.baseURL}/api/scan-enhanced`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
