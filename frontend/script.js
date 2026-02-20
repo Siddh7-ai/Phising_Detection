@@ -30,7 +30,7 @@ const CONFIG = {
     MAX_HISTORY:        10,
     THEMES:             ["cyber", "dark", "light"],
     ANIMATION_DURATION: 1000,
-    API_ENDPOINT:       "http://localhost:5000/api/scan-enhanced"
+    API_ENDPOINT: "https://phising-detection-onik.onrender.com/api/scan-enhanced"
 };
 
 // ML-only thresholds (must match backend)
