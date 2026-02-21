@@ -19,10 +19,10 @@ limits==5.8.0
 markdown-it-py==4.0.0
 MarkupSafe==3.0.3
 mdurl==0.1.2
-numpy==1.26.4
+numpy==1.23.5
 ordered-set==4.1.0
 packaging==26.0
-pandas==2.2.2
+pandas==1.5.3
 Pygments==2.19.2
 PyJWT==2.8.0
 python-dateutil==2.9.0.post0
@@ -31,7 +31,7 @@ python-whois==0.9.4
 pytz==2025.2
 requests==2.31.0
 rich==13.9.4
-scikit-learn==1.4.2
+scikit-learn==1.2.2
 scipy==1.11.4
 six==1.17.0
 soupsieve==2.8.3
