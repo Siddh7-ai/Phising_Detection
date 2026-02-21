@@ -6,7 +6,7 @@
 
 class APIClient {
     constructor() {
-        this.baseURL = "https://phising-detection-onik.onrender.com";
+        this.baseURL = "https://phising-detection-api.onrender.com";
         console.log("✅ APIClient initialized with baseURL:", this.baseURL);
     }
 
