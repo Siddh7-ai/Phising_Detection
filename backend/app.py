@@ -23,8 +23,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from backend.auth import auth_bp
-from backend.middleware import token_required
+from auth import auth_bp
+from middleware import token_required
 
 # ------------------------------------------------------------------
 # DOMAIN AGE CHECKER MODULE
@@ -133,14 +133,6 @@ def estimate_domain_age_heuristic(domain):
     
     # Default
     return 'Unknown'
-
-# ------------------------------------------------------------------
-# PATH FIX
-# ------------------------------------------------------------------
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if BASE_DIR not in sys.path:
-    sys.path.append(BASE_DIR)
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 # ------------------------------------------------------------------
 # MODULAR SCORING ENGINES (FIXED v6.1)
@@ -448,6 +440,11 @@ def explain_features_inline(url):
     }
 
 try:
+    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+    PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
+
+    if PROJECT_ROOT not in sys.path:
+        sys.path.append(PROJECT_ROOT)
     from ai.features import extract_features, explain_features
     print("[✓] ai.features module loaded")
 except ImportError:
@@ -543,9 +540,17 @@ if DATABASE_ENABLED:
 # ------------------------------------------------------------------
 # MODEL LOADING
 # ------------------------------------------------------------------
+# Get backend directory
+BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 
-MODEL_PATH = os.path.join(BASE_DIR, "model", "phishing_model.pkl")
-LOG_PATH = os.path.join(BASE_DIR, "logs", "scan_history.csv")
+# Get project root (one level up from backend)
+PROJECT_ROOT = os.path.dirname(BACKEND_DIR)
+
+# Correct model path
+MODEL_PATH = os.path.join(PROJECT_ROOT, "model", "phishing_model.pkl")
+
+# Correct log path
+LOG_PATH = os.path.join(PROJECT_ROOT, "logs", "scan_history.csv")
 
 try:
     model = joblib.load(MODEL_PATH)
