@@ -146,7 +146,7 @@ async function handleLogin(e) {
     hideError('loginError');
     
     try {
-        const response = await fetch('http://localhost:5000/auth/login', {
+        fetch("https://phising-detection-api.onrender.com/auth/register", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -237,7 +237,7 @@ async function handleSignup(e) {
     hideError('signupError');
     
     try {
-        const response = await fetch('http://localhost:5000/auth/register', {
+        const response = await fetch('https://phising-detection-api.onrender.com/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
