@@ -25,9 +25,10 @@ def validate_username(username):
     
     return True, None
 
-@auth_bp.route('/register', methods=['POST'])
+@auth_bp.route('/register', methods=['POST', 'OPTIONS'])
 def register():
-    """User registration"""
+    if request.method == "OPTIONS":
+        return "", 200
     try:
         data = request.get_json()
         
@@ -78,9 +79,10 @@ def register():
         print(f"Registration error: {e}")
         return jsonify({'error': 'Registration failed. Please try again.'}), 500
 
-@auth_bp.route('/login', methods=['POST'])
+@auth_bp.route('/login', methods=['POST', 'OPTIONS'])
 def login():
-    """User login"""
+    if request.method == "OPTIONS":
+        return "", 200
     try:
         data = request.get_json()
         
