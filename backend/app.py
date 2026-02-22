@@ -542,10 +542,40 @@ def get_model_name():
     return "Unknown Model"
 
 def predict_url(url):
+    # ✅ Self-exclusion — our own domains always legitimate
     OWN_DOMAINS = [
-        'https://phish-guard-ai-lac.vercel.app',
-        'https://phishguardai-nnez.onrender.com',
+        'phish-guard-ai-lac.vercel.app',
+        'phishguardai-nnez.onrender.com',
     ]
+    try:
+        parsed_check = urlparse(url)
+        hostname = parsed_check.netloc.lower().split(':')[0]
+        if any(hostname == d or hostname.endswith('.' + d) for d in OWN_DOMAINS):
+            return {
+                'url': url,
+                'prediction': 'Legitimate',
+                'classification': 'Legitimate',
+                'confidence': 0.0,
+                'risk_level': 'low',
+                'riskLevel': 'Low',
+                'model': get_model_name(),
+                'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'modules': {'ml': 0.0, 'lexical': 0.0, 'reputation': 0.0, 'behavior': 0.0, 'nlp': 0.0},
+                'module_scores': {'ML_model': 0.0, 'lexical': 0.0, 'reputation': 0.0, 'behavior': 0.0, 'NLP': 0.0},
+                'ensemble_contributions': {'ml': 0.0, 'lexical': 0.0, 'reputation': 0.0, 'behavior': 0.0, 'nlp': 0.0},
+                'module_contributions': {'ML_model': 0.0, 'lexical': 0.0, 'reputation': 0.0, 'behavior': 0.0, 'NLP': 0.0},
+                'metrics': {
+                    'https': url.startswith('https://'),
+                    'urlLength': len(url),
+                    'url_length': len(url),
+                    'domainAge': 'Trusted',
+                    'domain_age': 'Trusted',
+                    'features': {}
+                }
+            }
+    except Exception:
+        pass
+
     try:
         features = extract_features(url)
         result = internal_ensemble.analyze(url, features)
